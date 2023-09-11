@@ -1,0 +1,22 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">NewStore</a>
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/signup'">Sign Up here!</button>
+    </div>
+  </div>
+</nav>
+<div class="text-center mt-3">
+    <h1>Reset your Password</h1>
+    {{#if success}}
+        <div class="mt-3">
+            <p>Mail sent! Please check your email to proceed</p>
+            <button onclick="location.href='/'" class="btn btn-primary">BACK TO LOGIN</button>
+        </div>
+    {{else}}
+            <div class="mt-3">
+                <p>Error sending the mail, please try again!</p>
+                <button onclick="location.href='/resetpass'" class="btn btn-primary">TRY AGAIN</button>
+            </div>
+    {{/if}}
+</div>

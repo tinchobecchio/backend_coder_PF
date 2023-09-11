@@ -1,0 +1,52 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">NewStore</a>
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/signup'">Sign Up here!</button>
+    </div>
+  </div>
+</nav>
+<div class="text-center mt-3">
+    <h1>Reset your Password</h1>
+</div>
+
+{{#if success}}
+    <div class="container col-6 mt-3">
+        {{!-- <form id="formLogin" action="/api/sessions/newpass" method="post"> --}}
+        <div id="formNewPass">
+            <div class="mb-3">
+                <label for="password1">New password: </label>
+                <input
+                    class="form-control"
+                    type="password"
+                    name="password1"
+                    id="password1"
+                    placeholder="Your new password"
+                />
+            </div>
+
+            <div class="mb-3">
+                <label for="password2">Repeat the new password: </label>
+                <input
+                    class="form-control"
+                    type="password"
+                    name="password2"
+                    id="password2"
+                    placeholder="Repeat the password"
+                />
+            </div>
+
+            <button onclick="validatePassword()" class="btn btn-primary">SAVE CHANGES</button>
+        </div>
+    </div>
+{{else}}
+    <div class="text-center mt-3">
+        <div class="mt-3">
+            <p>Token has expired, please try again!</p>
+            <button onclick="location.href='/resetpass'" class="btn btn-primary">TRY AGAIN</button>
+        </div>
+    </div>
+{{/if}}
+
+
+<script src="/js/newPass.js"></script>

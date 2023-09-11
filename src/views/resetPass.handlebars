@@ -1,0 +1,29 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">NewStore</a>
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/signup'">Sign Up here!</button>
+    </div>
+  </div>
+</nav>
+<div class="text-center mt-3">
+    <h1>Reset your Password</h1>
+</div>
+
+<div class="container col-6 mt-3">
+    <form id="formLogin" action="/api/sessions/resetpwd" method="post">
+        <div class="mb-3">
+            <label for="email">Your E-mail:</label>
+            <input
+                class="form-control"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+            />
+        </div>
+
+        <button type="submit" class="btn btn-primary">SEND MAIL</button>
+    </form>
+
+</div>

@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">NewStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/products">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/chat">Chat</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/api/sessions/logout'">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container text-center">
+    <h2 class="mt-4">Cart</h2>
+    <div class="row mt-5">
+        {{#if products}}
+            {{#each products}}
+                <div class="col-4 mb-4">
+                    <div class="card" >
+                        <h5 class="card-header">{{this.id_prod.title}}</h5>
+                        <img src={{this.id_prod.thumbnails}} class="card-img-top" alt="{{this.id_prod.description}}">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{this.id_prod.description}}</h6>
+                            <p class="card-text">UNITARY PRICE: ${{this.id_prod.price}}</p>
+                            <p class="card-text">QUANTITY: {{this.cant}}</p>
+                            <button class="btn btn-primary" onclick="deleteFromCart('{{this.cid}}','{{this.id_prod._id}}')">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+            <div class="col-12 mb-4">
+                <button class="btn btn-primary" onclick="purchaseCart('{{cid}}')">Buy all products</button>
+                <button class="btn btn-primary" onclick="resetCart('{{cid}}')">Reset cart</button>
+            </div>
+        {{else}}
+        <h3>No products...</h3>
+        {{/if}}
+    </div>
+</div>
+<script src="js/cart.js"></script>

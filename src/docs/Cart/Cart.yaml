@@ -1,0 +1,745 @@
+paths:
+  /api/carts:
+    get:
+      summary: Obtener todos los carritos de la Base de Datos
+      tags:
+        - Cart
+      responses:
+        "200":
+          description: Devuelve todos los carritos de la base de datos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/AllCarts'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+    post:
+      summary: Crear un nuevo carrito en la Base de Datos
+      tags:
+        - Cart
+      responses:
+        "201":
+          description: Carrito creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/CartCreated'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+  /api/carts/{cid}:
+    get:
+      summary: Obtener un carrito de la Base de Datos segun su ID
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito que se desea consultar
+          schema:
+            type: string
+            example: 64d6602e955c04d5e16e9752
+      responses:
+        "200":
+          description: Devuelve un status, un mensaje exitoso y el carrito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/GetCartById'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+    put:
+      summary: Actualiza los productos de un carrito con un array de ids de productos dado
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito que se desea actualizar
+          schema:
+            type: string
+            example: 64d6602e955c04d5e16e9752
+      requestBody:
+        description: Array de ids de productos junto a la cantidad que se desea agregar de cada uno 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/UpdateCart'
+      responses:
+        "200":
+          description: Mensaje exitoso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/CartUpdated'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+    delete:
+      summary: Elimina todos los productos de un carrito segun su ID
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: paths
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+            example: 64d65f6635877a8cc89c662c
+      responses:
+        "200":
+          description: Devuelve un mensaje de operacion exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/CartReset'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+  
+  
+  /api/carts/{cid}/products/{pid}:
+    post:
+      summary: Añadir un producto al carrito
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+            example: 64d6602e955c04d5e16e9752
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+            example: 64d9c23f724c22fba6b52603
+      requestBody:
+        description: Cantidad del producto que se desea añadir al carrito 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/AddProdToCart'
+      responses:
+        "200":
+          description: Producto añadido al carrito correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/ProdAddedToCart'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+    put:
+      summary: Actualiza la cantidad de un producto existente en el carrito
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+            example: 64d6602e955c04d5e16e9752
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+            example: 64d9c23f724c22fba6b52603
+      requestBody:
+        description: Nueva cantidad del producto
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/UpdateProdQuantityInCart'
+      responses:
+        "200":
+          description: Cantidad actualizada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/QuantityUpdated'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+    delete:
+      summary: Elimina un producto del carrito
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+            example: 64d6602e955c04d5e16e9752
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+            example: 64d9c23f724c22fba6b52603
+      responses:
+        "200":
+          description: Producto eliminado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/ProdRemovedFromCart'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+
+  /api/carts/{cid}/purchase:
+    get:
+      summary: Genera un ticket de compra con los items del carrito que estan en stock
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+            example: 64d6602e955c04d5e16e9752
+      responses:
+        "200":
+          description: Ticket creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/CartResponses/PurchaseCart'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado de Mongo
+        products:
+          type: array
+          description: Productos en el carrito
+          items:
+            type: Object
+            properties:
+              _id:
+                type: string
+                description: ID del carrito
+              id_prod:
+                type: string
+                description: ID del producto
+              cant:
+                type: number
+                description: Cantidad del producto
+        __v:
+          type: number
+          description: Cantidad de veces que fue modificado el objeto. Autogestionado por Mongo.
+      example:
+        _id: 64d6602e955c04d5e16e9752
+        products: [{"id_prod": "64d7f7beee9fd307936f2d0f","cant": 2,"_id": "64d9c6153f4996a90365415d"}]
+        __v: 2
+    
+  requestBodies:
+    UpdateCart:
+      type: array
+      description: array de productos
+      items:
+        type: object
+        properties:
+          idProd:
+            description: id del producto a agregar
+            type: string
+          quantity:
+            description: cantidad del producto agregar
+            type: number
+        example:
+          idProd: 64e137e67c5d6687dfe62c4f
+          quantity: 2
+    AddProdToCart:
+      type: object
+      properties:
+        quantity:
+          description: Cantidad del producto a añadir
+          type: number
+      example:
+        quantity: 2
+    UpdateProdQuantityInCart:
+      type: object
+      properties:
+        quantity:
+          description: Cantidad deseada
+          type: number
+      example:
+        quantity: 2
+
+  CartResponses:
+    AllCarts:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success,error]
+          description: formas de respuesta
+        payload:
+          type: array
+          description: array de carritos
+          items:
+            type: object
+            example:
+              _id: 64d6602e955c04d5e16e9752
+              products: [{"id_prod": "64d7f7beee9fd307936f2d0f","cant": 2,"_id": "64d9c6153f4996a90365415d"}]
+              __v: 2
+    GetCartById:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        message:
+          type: string
+          example: "Cart 64d65f6635877a8cc89c662c founded"
+        cart:
+          type: array
+          description: array de productos en el carrito
+          items:
+            type: object
+            properties:
+                  _id:
+                    type: string
+                    description: Id autogenerado de mongo
+                    example: 64d9c6153f4996a90365415d
+                  id_prod:
+                    type: string
+                    description: Referencia id del producto en mongo
+                    example: 64d7f7beee9fd307936f2d0f
+                  cant:
+                    type: number
+                    description: Cantidad del producto
+                    example: 2
+    CartCreated:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "success"
+        message: 
+          type: string
+          example: 'Cart created succesfully.'     
+    CartUpdated:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "success"
+        message: 
+          type: string
+          example: 'Cart has been updated successfully.'
+    CartReset:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "success"
+        message: 
+          type: string
+          example: 'All products from cart has been removed successfully.'
+        cart: 
+          type: object
+          properties:
+            _id:
+              type: string
+              description: id del carrito
+            products:
+              type: array
+              description: array de productos en el carrito
+            __v:
+              type: number
+              description: atributo de mongo que indica cuantas veces se modificó el objeto
+          example:
+            _id: 64d65f6635877a8cc89c662c
+            products: []
+            __v: 1
+    ProdAddedToCart:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "success"
+        message: 
+          type: string
+          example: 'Product added to cart'
+        cart: 
+          type: object
+          properties:
+            _id:
+              type: string
+              description: id del carrito
+              example: 64d6602e955c04d5e16e9752
+            products:
+              type: array
+              description: array de productos en el carrito
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: Id autogenerado de mongo
+                    example: 64d9c6153f4996a90365415d
+                  id_prod:
+                    type: string
+                    description: Referencia id del producto en mongo
+                    example: 64d7f7beee9fd307936f2d0f
+                  cant:
+                    type: number
+                    description: Cantidad del producto
+                    example: 2
+            __v:
+              type: number
+              description: atributo de mongo que indica cuantas veces se modificó el objeto
+    QuantityUpdated:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "success"
+        message: 
+          type: string
+          example: 'Quantity updated'
+        cart: 
+          type: object
+          properties:
+            _id:
+              type: string
+              description: id del carrito
+              example: 64d6602e955c04d5e16e9752
+            products:
+              type: array
+              description: array de productos en el carrito
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: Id autogenerado de mongo
+                    example: 64d9c6153f4996a90365415d
+                  id_prod:
+                    type: string
+                    description: Referencia id del producto en mongo
+                    example: 64d7f7beee9fd307936f2d0f
+                  cant:
+                    type: number
+                    description: Cantidad del producto
+                    example: 2
+            __v:
+              type: number
+              description: atributo de mongo que indica cuantas veces se modificó el objeto
+    ProdRemovedFromCart:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "success"
+        message: 
+          type: string
+          example: 'Product deleted from cart successfully'
+        cart: 
+          type: object
+          properties:
+            _id:
+              type: string
+              description: id del carrito
+              example: 64d6602e955c04d5e16e9752
+            products:
+              type: array
+              description: array de productos en el carrito
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: Id autogenerado de mongo
+                    example: 64d9c6153f4996a90365415d
+                  id_prod:
+                    type: string
+                    description: Referencia id del producto en mongo
+                    example: 64d7f7beee9fd307936f2d0f
+                  cant:
+                    type: number
+                    description: Cantidad del producto
+                    example: 2
+            __v:
+              type: number
+              description: atributo de mongo que indica cuantas veces se modificó el objeto
+    PurchaseCart:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "success"
+        message: 
+          type: string
+          example: 'Ticket created and mail sent successfully.'
+        order: 
+          type: object
+          properties:
+            ticket:
+              type: object
+              description: Ticket de la compra
+              properties:
+                code:
+                  type: string
+                  example: 68f61079-2cdb-491b-b4e3-2c1e1ada9114
+                purchase_datetime:
+                  type: string
+                  example: 2023-08-21T20:49:21.364Z
+                amount:
+                  type: number
+                  example: 800
+                purchaser:
+                  type: string
+                  example: 'correo@correo.com'
+                _id:
+                  type: string
+                  example: new ObjectId("64e3cdf7c4edf02445a5cf38")
+                __v:
+                  type: number
+                  example: 0
+            products:
+              type: array
+              description: Productos comprados
+              items:
+                type: object
+                properties:
+                  id_prod:
+                    type: string
+                    description: Referencia id del producto en mongo
+                    example: 64d7f7beee9fd307936f2d0f
+                  cant:
+                    type: number
+                    description: Cantidad del producto
+                    example: 2
+            not_purchased:
+              type: array
+              description: Productos no disponibles por falta de stock
+              items:
+                type: object
+                properties:
+                  id_prod:
+                    type: string
+                    description: Referencia id del producto en mongo
+                    example: 64d7f7beee9fd307936f2d0f

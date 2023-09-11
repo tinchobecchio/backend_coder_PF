@@ -1,0 +1,414 @@
+paths:
+  /api/products:
+
+    get:
+      summary: Obtener todos los productos de la Base de Datos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Devuelve un objeto con el formato de paginate, donde el array 'docs' contiene los productos y el resto es información de la paginación.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/ProductsResponses/AllProds'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+    post:
+      summary: Crear un nuevo producto en la Base de Datos
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/PostProduct'
+      responses:
+        "201":
+          description: Producto creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/ProductsResponses/DTOProduct'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+  /api/products/{pid}:
+    get:
+      summary: Obtener un producto de la Base de Datos segun su ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto que se desea consultar
+          schema:
+            type: string
+            example: 64d7f77eee9fd307936f2d09
+      responses:
+        "200":
+          description: Devuelve el producto en el payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/ProductsResponses/DTOProduct'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+    put:
+      summary: Actualizar un producto de la Base de Datos segun su ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto que se desea modificar
+          schema:
+            type: string
+            example: 64d7f77eee9fd307936f2d09
+      requestBody:
+        description: Se coloca la propiedad que se quiera cambiar y el nuevo valor. Se puede enviar varias propiedades al mismo tiempo.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/PostProduct'
+      responses:
+        "200":
+          description: Devuelve un mensaje de actualizacion exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/ProductsResponses/UpdateProduct'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+    delete:
+      summary: Eliminar un producto de la Base de Datos segun su ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: paths
+          required: true
+          description: id del producto que se desea eliminar
+      responses:
+        "200":
+          description: Devuelve un mensaje de eliminación exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/ProductsResponses/DeleteProduct'
+        '400':
+          description: Petición inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '401':
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        '403':
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+
+
+components:
+  schemas:
+    Product:
+      type: Object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID autogenerado de Mongo
+        title:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripción del producto
+        code:
+          type: String
+          description: Código del producto
+        price:
+          type: Number
+          description: Precio del producto
+        category:
+          type: String
+          description: Categoria del producto
+        stock:
+          type: Number
+          description: Cantidad de producto en stock
+        status:
+          type: Boolean
+          description: Estado del producto
+        thumbnails:
+          type: Array
+          description: Array de imagenes del producto
+        owner:
+          type: String
+          description: Dueño del producto
+      example:
+        _id: ObjectId("123asdf456")
+        title: 'Item1'
+        description: 'Descripcion del item'
+        code: 'item'
+        price: 2000
+        category: 'Elementos'
+        stock: 400
+        status: true
+        thumbnails: []
+        owner: 'correo@correo.com'
+
+  requestBodies:
+    PostProduct:
+      type: Object
+      properties:
+        title:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripción del producto
+        code:
+          type: String
+          description: Código del producto
+        price:
+          type: Number
+          description: Precio del producto
+        category:
+          type: String
+          description: Categoria del producto
+        stock:
+          type: Number
+          description: Cantidad de producto en stock
+        thumbnails:
+          type: Array
+          description: Array de imagenes del producto
+      example:
+        title: 'Item1'
+        description: 'Descripcion del item'
+        code: 'item'
+        price: 2000
+        category: 'Elementos'
+        stock: 400
+        thumbnails: []
+
+  ProductsResponses:
+      AllProds:
+        type: object
+        properties:
+          status:
+            type: string
+            enum: [success,error]
+            description: formas de respuesta
+          payload:
+            type: object,
+            properties:
+              docs:
+                type: array,
+                description: array de productos
+                items:
+                  type: object
+                  example:
+                    _id: ObjectId("123asdf456")
+                    title: 'Item1'
+                    description: 'Descripcion del item'
+                    code: 'item'
+                    price: 2000
+                    category: 'Elementos'
+                    stock: 400
+                    status: true
+                    thumbnails: []
+                    owner: 'correo@correo.com'
+              totalDocs:
+                type: number
+                example: 3
+              limit:
+                type: number
+                example: 10
+              totalPages:
+                type: number
+                example: 1
+              page:
+                type: number
+                example: 1
+              pagingCounter:
+                type: number
+                example: 3
+              hasPrevPage:
+                type: Boolean
+                example: false
+              hasNextPage:
+                type: Boolean
+                example: false
+              prevPage:
+                type: number
+                example: 3
+              nextPage:
+                type: number
+                example: 5
+
+      DTOProduct:
+        type: Object
+        properties:
+          status:
+            type: String
+            enum: [success,error]
+            description: formas de respuesta
+          payload:
+            type: Object,
+            example:
+              _id: ObjectId('123asdf456')
+              title: 'Item1'
+              description: 'Descripcion del item'
+              code: 'item'
+              price: 2000
+              category: 'Elementos'
+              stock: 400
+              status: true
+              thumbnails: []
+              owner: 'correo@correo.com'
+
+      UpdateProduct:
+        type: Object
+        properties:
+          status:
+            type: String
+            example: "success"
+          message:
+            type: String
+            example: "The product has been updated successfully."
+
+      DeleteProduct:
+        type: Object
+        properties:
+          status:
+            type: String
+            example: "success"
+          message:
+            type: String
+            example: "The product has been deleted successfully."
+
+  Error:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Estado de la consulta
+            example: "Error"
+          error:
+            type: string
+            description: Nombre del error
+            example: "Nombre del error"
+          message:
+            type: string
+            description: Mensaje del error
+            example: "Mensaje del error"
+          cause:
+            type: string
+            description: Causa del error
+            example: "Causa del error"
