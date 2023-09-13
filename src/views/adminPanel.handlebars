@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">NewStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+{{#if isAdmin}}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Admin Panel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  href="/products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"href="/profile">Profile</a>
+          </li>
+        {{else}}
+          <li class="nav-item">
+            <a class="nav-link"  href="/products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cart">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/chat">Chat</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/api/sessions/logout'">Logout</button>
+    </div>
+  </div>
+</nav>
+
+
+<div class="text-center mt-4">
+    <h4>Welcome {{first_name}} {{last_name}} !</h4>
+    <p>Role: {{role}}</p>
+</div>
+
+<div class="container mt-4">
+    <h2>Users</h2>
+    
+    <table class="table table-striped table-hover" id="table-panel">
+    <thead>
+        <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+        <th scope="col">Change role</th>
+        <th scope="col">Delete user</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each users}}
+            <tr>
+            <th scope="row">{{this.first_name}} {{this.last_name}}</th>
+            <td>{{this.email}}</td>
+            <td>{{this.role}}</td>
+            <td><button class="btn btn-primary" onclick="changeRole('{{this._id}}')">Change Role</button></td>
+            <td><button class="btn btn-danger" onclick="deleteUser('{{this._id}}')">Delete user</button></td>
+            </tr>
+        {{/each}}
+    </tbody>
+    </table>
+    <div class="col-12">
+      <button class="btn btn-danger" onclick="deleteInactiveUsers()">Delete Inactive Users</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/adminPanel.js"></script>

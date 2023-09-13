@@ -1,2 +1,6 @@
 node_modules
 .env
+src/public/uploads/documents/**
+src/public/uploads/products/**
+src/public/uploads/profiles/**
+!.gitkeep

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { getAllProds, getAllProducts } from '../services/products.service.js'
 import { getProducts } from '../services/cart.service.js'
-import { findByEmail, getDocs } from '../services/users.service.js'
+import { findByEmail, getAllUsers, getDocs } from '../services/users.service.js'
 // Login '/'
 export const login = (req,res,next) => {
     // Si ya esta logueado lo manda a la vista de productos
@@ -42,7 +42,7 @@ export const profile = async(req,res,next) => {
         if(profileDoc){
             imgProfile = profileDoc.reference
         }
-
+        let isAdmin = user.role === "admin"
         return res.render('profile', {
             title: 'Perfil',
             first_name: user.first_name,
@@ -51,7 +51,8 @@ export const profile = async(req,res,next) => {
             age: user.age,
             role: user.role,
             imgProfile: imgProfile,
-            uid: uid
+            uid: uid,
+            isAdmin: isAdmin
         })
     } catch (error) {
         console.log(error);
@@ -70,12 +71,14 @@ export const products = async (req,res,next) => {
             products.forEach(prod => prod.cid = cid)
         } // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
 
+        let isAdmin = user.role === "admin"
         return res.render('products', {
             title: 'Productos',
             first_name: user.first_name,
             last_name: user.last_name,
             products: products,
-            role: user.role
+            role: user.role,
+            isAdmin: isAdmin
         })
     } catch (error) {
         console.log(error)
@@ -107,7 +110,7 @@ export const cart = async (req,res,next) => {
         let products = await getProducts(cid)
         let prods = products.toObject()
         
-        if(prods !== []){
+        if(prods[0]){
             prods.forEach(prod => prod.cid = cid)
         } // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
         
@@ -120,9 +123,6 @@ export const cart = async (req,res,next) => {
     } catch (error) {
         next(error)
     }
-
-    
-    
 }
 
 // Resetear contraseña
@@ -160,4 +160,24 @@ export const newPass = (req,res) => {
     
     // - si es valido le renderiza un campo para introducir nueva contra  y otro para repetirla
     return res.render('newPass',{title: 'Reset Password', success: success})
+}
+
+export const adminPanel = async(req,res,next) => {
+    try {
+        const user = req.user
+        const users = await getAllUsers()
+
+        let isAdmin = user.role === "admin"
+        return res.render('adminPanel', {
+            title: 'Admin Panel',
+            first_name: user.first_name,
+            last_name: user.last_name,
+            role: user.role,
+            users: users,
+            isAdmin: isAdmin
+        })
+
+    } catch (error) {
+        console.log(error);
+    } 
 }

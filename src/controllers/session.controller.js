@@ -124,8 +124,4 @@ export const newpass = async(req,res) => {
       return res.json({success: false, message: 'The new password must be different than the old one, please try again'})
     }
   }
-
-  // vista de resultado, quizas con una variable pueda renderizar ambas en la misma plantilla
-  // en caso de error vuelve a vista de reset
-  // en caso de exito muestra mensaje exito y boton de volver al login
 }
