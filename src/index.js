@@ -1,6 +1,7 @@
 import config from "./config/config.js";
 import express from "express";
-import { engine } from "express-handlebars";
+// import { engine } from "express-handlebars";
+import { hbs } from "./utils/hbs.js"; // hice uno personalizado con helpers en utils
 import * as path from "path";
 import { __dirname, __filename } from "./utils/path.js";
 import "./config/dbconfig.js";
@@ -73,7 +74,8 @@ app.use(passport.initialize());
 // app.use(passport.session());
 
 // Configuraciones HBS
-app.engine("handlebars", engine());
+// app.engine("handlebars", engine());
+app.engine("handlebars", hbs.engine); // personalizado con helpers de handlebars
 app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname, "./views"));
 
@@ -132,7 +134,11 @@ io.on("connection", (socket) => {
     let text = `${data.user} se ha conectado`;
     socket.broadcast.emit("newConnection", text); // avisa al resto que se conecto
 
-    clients.unshift(data);
+    if(clients.find(user => user.user === data.user)){ // si existe lo saca de la lista
+      let filtered = clients.filter(user => user.user !== data.user)
+      clients = filtered
+    }
+    clients.unshift(data); // lo agrega al principio de la lista
 
     if (clients.length > 9) {
       let listado = clients.slice(0, 9);

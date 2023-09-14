@@ -22,6 +22,9 @@
       </ul>
     </div>
 
+    <div class="d-flex me-3 pt-2">
+      <h6>{{first_name}} {{last_name}} <span class="{{roleClass}}">{{role}}</span></h6>
+    </div>
     <div class="d-flex">
         <button class="btn btn-outline-success" onclick="location.href='/api/sessions/logout'">Logout</button>
     </div>
@@ -29,7 +32,7 @@
 </nav>
 
 <div class="container">
-    <h1 class="mt-4">Chat comunitario</h1>
+    <h1 class="mt-4">Community Chat</h1>
 
     <div class="row">
         <div class="col-md-8">
@@ -39,15 +42,15 @@
             </div>
 
             <div class="mt-4">
-                <label for="chatBox" class="form-label">Nuevo mensaje</label>
-                <input class="form-control" type="text" id="chatBox" placeholder="Ingrese su mensaje y presione enter para enviar">
+                <label for="chatBox" class="form-label">Send a message!</label>
+                <input class="form-control" type="text" id="chatBox" placeholder="Press ENTER to send the message">
             </div>
         </div>
 
         <div class="col-md-4" >
             <div class="card mt-4">
                 <div class="card-header">
-                    Últimas conexiones:
+                    Last connections:
                 </div>
                 <ul class="list-group list-group-flush" id="enLinea">
                 </ul>
@@ -60,4 +63,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"
         integrity="sha512-AI5A3zIoeRSEEX9z3Vyir8NqSMC1pY7r5h2cE+9J6FLsoEmSSGLFaqMQw8SWvoONXogkfFrkQiJfLeHLz3+HOg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/chat.js"></script>

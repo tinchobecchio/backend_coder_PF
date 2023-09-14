@@ -1,21 +1,14 @@
 const socket = io()
 
-let user
 let chatBox = document.getElementById('chatBox')
 let listaOnline = document.getElementById('enLinea')
-
-Swal.fire({
-    title:'Nuevo Usuario',
-    input: "text",
-    text: 'Ingresa un nombre para identificarte en el chat',
-    inputValidator: (value) => {
-        return !value && '¡Necesitas un nombre de usuario para continuar!'
-    },
-    allowOutsideClick: false
-}).then(result => {
-    user = result.value // seteo user con el nombre que ingresa en la alerta
-    socket.emit('authOk', {user: user}) // le avisa al servidor que se autenticó correctamente
-})
+let user
+fetch('/api/sessions/current')
+    .then(res => res.json())
+    .then(data => {
+        user = `${data.user.first_name} ${data.user.last_name}`
+        socket.emit('authOk', {user: user})
+    })
 
 chatBox.addEventListener('keyup', e => { // capturo el evento de soltar tecla
     if(e.key === 'Enter') { // si la tecla es enter
