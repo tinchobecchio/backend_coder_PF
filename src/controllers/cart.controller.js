@@ -177,7 +177,7 @@ export const updateCartProductQuantity = async (req,res,next) => {
                 })
             }
             
-            return res.status(200).json({status: "success", message: 'Quantity updated', cart: carrito})
+            return res.status(200).json({status: "success", message: `Quantity updated to ${quantity}`, cart: carrito})
         }
         else {
             CustomError.createError({
