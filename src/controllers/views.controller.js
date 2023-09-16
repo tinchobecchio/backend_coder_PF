@@ -78,7 +78,8 @@ export const products = async (req,res,next) => {
             last_name: user.last_name,
             products: products,
             role: user.role,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            cid: cid
         })
     } catch (error) {
         console.log(error)
@@ -119,8 +120,6 @@ export const cart = async (req,res,next) => {
             })
         } 
         
-        // console.log(prods);
-        // console.log(total);
         return res.render('cart', {
             title: 'Cart',
             products: prods,

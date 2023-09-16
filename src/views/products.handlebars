@@ -85,7 +85,7 @@
                           <p class="card-text">CATEGORY: {{this.category}}</p>
                       </div>
 
-                      <form 
+                      {{!-- <form 
                         action="/api/carts/{{this.cid}}/products/{{this._id}}" 
                         method="post" 
                       >
@@ -98,10 +98,20 @@
                             <button type="submit" class="btn btn-primary mb-3">Add to Cart</button>
                           </div>
                         </div>
-                      </form>
+                      </form> --}}
+
+                      <div class="col-auto my-1">
+                        <button class="btn btn-primary mb-3" onclick="addToCart('{{cid}}','{{this._id}}')">Add to Cart</button>
+                      </div>
+
+
                   </div>
               </div>
           {{/each}}
       </div>
     {{/if}}
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/products.js"></script>

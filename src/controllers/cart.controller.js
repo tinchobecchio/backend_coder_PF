@@ -90,8 +90,7 @@ export const addCartProduct = async (req,res,next) => { // premium no puede agre
                 })
             }
             
-            // return res.status(200).json({status: "success", message: 'Product added to cart', cart: carrito})
-            return res.render("productAdded")
+            return res.status(200).json({status: "success", message: 'Product added to cart', cart: carrito})
         }
         else {
             CustomError.createError({
