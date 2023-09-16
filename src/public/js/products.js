@@ -1,9 +1,6 @@
 const addToCart = (cid, pid) => {
-    console.log("cid",cid);
-    console.log("pid",pid);
-    // TO-DO : hacer un fetch POST /:cid/products/:pid con la cantidad del producto que me pasa por sweetalert
 
-    // para que el usuario ingrese una nueva cantidad
+    // para que el usuario ingrese una cantidad
     Swal.fire({
         title: 'Enter a quantity',
         input: 'number',
@@ -23,11 +20,8 @@ const addToCart = (cid, pid) => {
     })
 
     .then((result) => {
-        // si ha ingresado una cantidad nueva entonces actualizarla
         if (result.isConfirmed) {
-
             const URL = `/api/carts/${cid}/products/${pid}`
-
             const newQuantity = {
                 quantity: parseInt(result.value)
             }
@@ -41,7 +35,6 @@ const addToCart = (cid, pid) => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     // al resultado mostrarlo en otro alert y hacer un location.reload()
                     if(data.status === 'success'){
                         Swal.fire({
@@ -56,7 +49,7 @@ const addToCart = (cid, pid) => {
                             } 
                           })
                     }
-                    // si no se pudo actualizar la cantidad mostrar error
+                    // mostrar error si paso algo
                     if(data.status === 'error'){
                         Swal.fire({
                             icon: 'error',
@@ -66,8 +59,6 @@ const addToCart = (cid, pid) => {
                             allowOutsideClick: false
                         })
                     }
-
-
                 })
                 .catch(err => {
                     Swal.fire({

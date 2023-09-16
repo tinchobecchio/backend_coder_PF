@@ -69,12 +69,13 @@ export const addCartProduct = async (req,res,next) => { // premium no puede agre
         // si es un usuario premium y ES un producto suyo devuelve error
         const product = await getProdById(pid) 
         if(req.user.role !== "admin" && product.owner === req.user.email){
-            CustomError.createError({
-                name:"Adding a product to cart error",
-                cause: "The product belong to the user",
-                message:"You can't buy your own products",
-                code:EErrors.AUTHORIZATION_ERROR
-            })
+            // CustomError.createError({
+            //     name:"Adding a product to cart error",
+            //     cause: "The product belong to the user",
+            //     message:"You can't buy your own products",
+            //     code:EErrors.AUTHORIZATION_ERROR
+            // })
+            return res.status(200).json({status: "error", message: "You can't buy your own products!"})
         }
 
         if(quantity>0){
