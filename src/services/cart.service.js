@@ -1,4 +1,5 @@
 import {cartManager} from "../persistencia/DAOs/MongoDAOs/cartMongo.js";
+import { getProd } from "./products.service.js";
 
 export const findAllCarts = async() => {
     try {
@@ -34,26 +35,30 @@ export const getProducts = async (id) => {
 // Agrega un producto a un carrito. Por body se le pasa quantity
 export const addProduct = async (cid,pid,quantity) => { 
     try {
-            let carrito = await cartManager.findOneByid(cid)
-            const existingProd = carrito.products.find(e => e.id_prod == pid)
-            // si el producto existe en el carrito le agrega la cantidad
-            if(existingProd) {
-                quantity = parseInt(quantity) + parseInt(existingProd.cant)
-                await updateProductQuantity(cid, pid, quantity)
+        // reviso si el producto ya esta en el carrito
+        let carrito = await cartManager.findOneByid(cid)
+        const existingProd = carrito.products.find(e => e.id_prod == pid)
 
-                carrito = await cartManager.findOneByid(cid)
-                return carrito
-            }
-            // agrega el producto si no existe
-            const nuevoProducto = {
-                id_prod: pid,
-                cant: parseInt(quantity)
-            }
+        // si el producto existe en el carrito le actualiza la cantidad 
+        if(existingProd) {
+            let newQuantity = parseInt(quantity) + parseInt(existingProd.cant)
 
-            carrito.products.push(nuevoProducto)
-            carrito.save()
+            // actualiza la cantidad en el carrito
+            await updateProductQuantity(cid, pid, newQuantity)
 
+            carrito = await cartManager.findOneByid(cid)
             return carrito
+        }
+        // agrega el producto si no existe
+        const nuevoProducto = {
+            id_prod: pid,
+            cant: parseInt(quantity)
+        }
+
+        carrito.products.push(nuevoProducto)
+        carrito.save()
+
+        return carrito
 
     } catch (error) {
         console.log(error);

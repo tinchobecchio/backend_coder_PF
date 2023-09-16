@@ -68,7 +68,7 @@ export const addCartProduct = async (req,res,next) => { // premium no puede agre
 
         // si es un usuario premium y ES un producto suyo devuelve error
         const product = await getProdById(pid) 
-        if(req.user.role === "premium" && product.owner === req.user.email){
+        if(req.user.role !== "admin" && product.owner === req.user.email){
             CustomError.createError({
                 name:"Adding a product to cart error",
                 cause: "The product belong to the user",
@@ -125,7 +125,7 @@ export const deleteCartProduct = async (req,res,next) => {
 
         // elimina el producto del carrito
         const carrito = await deleteProduct(cid, pid)
-        return res.status(200).json({status: "success", message: 'Product deleted from cart successfully', cart: carrito})
+        return res.status(200).json({status: "success", message: 'Product removed from cart successfully', cart: carrito})
 
     } catch (error) {
         next(error)
@@ -236,7 +236,7 @@ export const purchase = async (req,res,next) => {
                 })
             .then(response => response.json())
             .then(res => req.logger.info(res))
-            .catch(err => req.logger.info(err))
+            .catch(err => req.logger.error(err))
     
             return res.status(200).json({status: "success", message: 'Ticket created and mail sent successfully.', order: newTicket})
         } else {

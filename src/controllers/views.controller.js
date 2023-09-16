@@ -110,10 +110,17 @@ export const cart = async (req,res,next) => {
         let products = await getProducts(cid)
         let prods = products.toObject()
         
+        let total = 0
         if(prods[0]){
-            prods.forEach(prod => prod.cid = cid)
-        } // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
+            prods.forEach(prod => {
+                prod.cid = cid // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
+                prod.sum = prod.id_prod.price * prod.cant // para facilitar la suma total
+                total += prod.sum
+            })
+        } 
         
+        // console.log(prods);
+        // console.log(total);
         return res.render('cart', {
             title: 'Cart',
             products: prods,
@@ -121,6 +128,7 @@ export const cart = async (req,res,next) => {
             first_name: user.first_name,
             last_name: user.last_name,
             role: user.role,
+            total: total
         })
 
     } catch (error) {
