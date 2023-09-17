@@ -23,7 +23,7 @@ export const createTicket = async(cid, email) => {
             if(cant > stock){
                 noDisponibles.push(prod)
             }
-
+            
             //si tiene stock suficiente restar el necesario del stock del producto y agregar el monto total 
             if(cant <= stock){
                 // Restar el stock
@@ -59,13 +59,13 @@ export const createTicket = async(cid, email) => {
                 }
             })
         }
-        
+        // vaciar carrito
+        await resetCartProds(cid)
+
         // devolver al carrito los productos que no se pudieron comprar
         if(noDisponibles.length > 0){
             await updateArrayProds(cid,noDisponibles)
             respuesta.not_purchased = noDisponibles.map(prod => prod.id_prod._id) // adjuntarlos en la respuesta
-        } else {
-            await resetCartProds(cid) // vaciar carrito en caso de que se compraron todos los productos
         }
         
         return respuesta

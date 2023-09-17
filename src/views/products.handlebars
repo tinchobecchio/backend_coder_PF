@@ -44,72 +44,54 @@
 </nav>
 
 <div class="container text-center">
-    <h2 class="mt-4" id="titulo">Products</h2>
-    {{#if isAdmin}}
-      <div class="row mt-5">
-          {{#each products}}
-              <div class="col-4 mb-4">
-                  <div class="card" >
-                      <h5 class="card-header">{{this.title}}</h5>
-                      <img src={{this.thumbnails}} class="card-img-top" alt="{{this.description}}">
-                      <div class="card-body">
-                          <h6 class="card-subtitle mb-2 text-body-secondary">{{this.description}}</h6>
-                          <p class="card-text">CODE: {{this.code}}</p>
-                          <p class="card-text">PRICE: ${{this.price}}</p>
-                          <p class="card-text">STOCK: {{this.stock}}</p>
-                          <p class="card-text">CATEGORY: {{this.category}}</p>
-                          <p class="card-text">OWNER: {{this.owner}}</p>
-                      </div>
-                      <div class="col-auto my-4">
-                        <button class="btn btn-primary mx-2">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
-                      </div>
-                  </div>
-              </div>
-          {{/each}}
-      </div>
+  <h2 class="mt-4" id="titulo">Products</h2>
+  {{#if isAdmin}}
+    <div class="row mt-5">
+        {{#each products}}
+            <div class="col-4 mb-4">
+                <div class="card" >
+                    <h5 class="card-header">{{this.title}}</h5>
+                    <img src={{this.thumbnails}} class="card-img-top" alt="{{this.description}}">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-body-secondary">{{this.description}}</h6>
+                        <p class="card-text">CODE: {{this.code}}</p>
+                        <p class="card-text">PRICE: ${{this.price}}</p>
+                        <p class="card-text">STOCK: {{this.stock}}</p>
+                        <p class="card-text">CATEGORY: {{this.category}}</p>
+                        <p class="card-text">OWNER: {{this.owner}}</p>
+                    </div>
+                    <div class="col-auto my-4">
+                      <button class="btn btn-primary mx-2">Edit</button>
+                      <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
 
 
-    {{else}}
-      <div class="row mt-5">
-          {{#each products}}
-              <div class="col-4 mb-4">
-                  <div class="card" >
-                      <h5 class="card-header">{{this.title}}</h5>
-                      <img src={{this.thumbnails}} class="card-img-top" alt="{{this.description}}">
-                      <div class="card-body">
-                          <h6 class="card-subtitle mb-2 text-body-secondary">{{this.description}}</h6>
-                          <p class="card-text">CODE: {{this.code}}</p>
-                          <p class="card-text">PRICE: ${{this.price}}</p>
-                          <p class="card-text">STOCK: {{this.stock}}</p>
-                          <p class="card-text">CATEGORY: {{this.category}}</p>
-                      </div>
-
-                      {{!-- <form 
-                        action="/api/carts/{{this.cid}}/products/{{this._id}}" 
-                        method="post" 
-                      >
-                        <div class="form-row align-items-center">
-                          <div class="col-4 container">
-                            <label class="mr-sm-2 sr-only" for="quantity_{{this._id}}">Quantity:</label>
-                            <input type="number" class="form-control" id="quantity_{{this._id}}" name="quantity" value="1" min="1" max="{{this.stock}}">
-                          </div>
-                          <div class="col-auto my-1">
-                            <button type="submit" class="btn btn-primary mb-3">Add to Cart</button>
-                          </div>
-                        </div>
-                      </form> --}}
-
-                      <div class="col-auto my-1">
-                        <button class="btn btn-primary mb-3" onclick="addToCart('{{cid}}','{{this._id}}')">Add to Cart</button>
-                      </div>
-
-
-                  </div>
-              </div>
-          {{/each}}
-      </div>
-    {{/if}}
+  {{else}}
+    <div class="row mt-5">
+      {{#each products}}
+        <div class="col-4 mb-4">
+          <div class="card" >
+            <h5 class="card-header">{{this.title}}</h5>
+            <img src={{this.thumbnails}} class="card-img-top" alt="{{this.description}}">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">{{this.description}}</h6>
+              <p class="card-text">CODE: {{this.code}}</p>
+              <p class="card-text">PRICE: ${{this.price}}</p>
+              <p class="card-text">STOCK: {{this.stock}}</p>
+              <p class="card-text">CATEGORY: {{this.category}}</p>
+            </div>
+            <div class="col-auto my-1">
+              <button class="btn btn-primary mb-3" onclick="addToCart('{{cid}}','{{this._id}}')">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
 </div>
 
 

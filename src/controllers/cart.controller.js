@@ -75,7 +75,7 @@ export const addCartProduct = async (req,res,next) => { // premium no puede agre
             //     message:"You can't buy your own products",
             //     code:EErrors.AUTHORIZATION_ERROR
             // })
-            return res.status(200).json({status: "error", message: "You can't buy your own products!"})
+            return res.status(200).json({status: "error", message: "You are not allowed to buy your own products!"})
         }
 
         if(quantity>0){
@@ -125,7 +125,7 @@ export const deleteCartProduct = async (req,res,next) => {
 
         // elimina el producto del carrito
         const carrito = await deleteProduct(cid, pid)
-        return res.status(200).json({status: "success", message: 'Product removed from cart successfully', cart: carrito})
+        return res.status(200).json({status: "success", message: 'The product has been removed from cart', cart: carrito})
 
     } catch (error) {
         next(error)
@@ -219,40 +219,36 @@ export const resetCart = async (req,res,next) => {
     }
 }
 
-// Genera un ticket de compra con los items del carrito que estan en stock
+// Genera un ticket de compra con los items del carrito que estan en stock y luego envia un email
 export const purchase = async (req,res,next) => {
     try {
         const { cid } = req.params
         const { email } = req.user
         const newTicket = await createTicket(cid, email)
-        
-        if(newTicket.ticket){
-            // mandar mail
-            const URL = `http://localhost:4000/api/mail/ticket`
-            fetch(URL, {
-                    method: 'POST',
-                    body: JSON.stringify(newTicket),
-                    headers: {"Content-type": "application/json; charset=UTF-8"}
-                })
-            .then(response => response.json())
-            .then(res => req.logger.info(res))
-            .catch(err => req.logger.error(err))
-    
-            return res.status(200).json({status: "success", message: 'Ticket created and mail sent successfully.', order: newTicket})
-        } else {
 
-            
-            CustomError.createError({
-                name:"Error in the purchase process",
-                cause: 'Cart is empty or all products from cart were out of stock.',
-                message: `The purchase process failed.`,
-                code:EErrors.INVALID_TYPES_ERROR
+        if(newTicket.ticket){ // si se pudo comprar algo
+            // mandar mail
+            const baseUrl = req.protocol + '://' + req.get('host'); // trae https + :// + pepito.com
+            const URL = `${baseUrl}/api/mail/ticket`
+
+            fetch(URL, {
+                method: 'POST',
+                body: JSON.stringify(newTicket),
+                headers: {"Content-type": "application/json; charset=UTF-8"}
             })
+            .catch(err => console.log(err))
+            
+            if(newTicket.not_purchased){ // si se pudo comprar algo pero hubo productos que no tenian stock
+                return res.status(200).json({status: "success", message: 'Some products do not have enough stock and were returned to the cart. We have sent you an email with your purchase information.', order: newTicket})
+            }
+            // Si se pudo comprar todo
+            return res.status(200).json({status: "success", message: 'A ticket with your order has been sent to your email.', order: newTicket})
+        
+        } else if (!newTicket.ticket && newTicket.not_purchased){ // si no se pudo comprar nada
+            return res.status(200).json({status: "error", message: 'The products do not have enough stock'})
         }
 
     } catch (error) {
-        // req.logger.error('Error in the purchase process')
-        // return res.status(400).json({message: error});
         next(error)
     }
 }

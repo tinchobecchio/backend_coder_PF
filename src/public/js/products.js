@@ -40,14 +40,32 @@ const addToCart = (cid, pid) => {
                         Swal.fire({
                             icon: "success",
                             title: 'Success!',
+                            showDenyButton: true,
                             text: data.message,
-                            confirmButtonText: 'OK!',
+                            confirmButtonText: 'Continue',
+                            denyButtonText: 'Go to Cart',
                             allowOutsideClick: false
                           }).then((result) => {
                             if (result.isConfirmed) {
                                 location.reload()
-                            } 
+                            } else if (result.isDenied) {
+                                location.href="/cart"
+                            }
                           })
+                        //   Swal.fire({
+                        //     title: 'Do you want to save the changes?',
+                        //     showDenyButton: true,
+                        //     showCancelButton: true,
+                        //     confirmButtonText: 'Save',
+                        //     denyButtonText: `Don't save`,
+                        //   }).then((result) => {
+                        //     /* Read more about isConfirmed, isDenied below */
+                        //     if (result.isConfirmed) {
+                        //       Swal.fire('Saved!', '', 'success')
+                        //     } else if (result.isDenied) {
+                        //       Swal.fire('Changes are not saved', '', 'info')
+                        //     }
+                        //   })
                     }
                     // mostrar error si paso algo
                     if(data.status === 'error'){
@@ -71,11 +89,4 @@ const addToCart = (cid, pid) => {
                 })
         } 
     })
-
-
-
-
-
-
-
 }

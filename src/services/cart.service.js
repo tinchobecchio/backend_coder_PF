@@ -85,7 +85,10 @@ export const deleteProduct = async (cid, pid) => {
 // Actualiza los productos de un carrito con un array de ids de productos dado (se lo paso por req.body)
 export const updateArrayProds = async (cid, array) => {
     try {
-        array.forEach(prod => addProduct(cid, prod.idProd, prod.quantity))
+        // array.forEach(prod => addProduct(cid, prod.idProd, prod.quantity))
+        array.forEach(prod => {
+            addProduct(cid, prod.id_prod._id, prod.cant)
+        })
         return 
     } catch (error) {
         return error

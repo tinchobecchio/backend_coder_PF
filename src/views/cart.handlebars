@@ -75,9 +75,10 @@
                     <img src={{this.id_prod.thumbnails}} alt="{{this.id_prod.description}}" class="img-thumbnail mt-1">
                   </div>
                   <div class="col d-flex flex-column justify-content-center">
-                    <p class="fs-4 fw-semibold">{{this.id_prod.title}}</p>
-                    <p class="fs-6 fw-medium">{{this.id_prod.description}}</p>
-                    <p class="fs-6">UNITARY PRICE: ${{this.id_prod.price}}</p>
+                    <span class="fs-4 fw-semibold">{{this.id_prod.title}}</span>
+                    <span class="fs-6 fw-medium">{{this.id_prod.description}}</span>
+                    <span class="fs-6">Unitary Price: ${{this.id_prod.price}}</span>
+                    <span class="fs-6">Available: {{this.id_prod.stock}}</span>
                   </div>
                   <div class="col-3 text-center d-flex flex-column justify-content-evenly">
                     <div>
