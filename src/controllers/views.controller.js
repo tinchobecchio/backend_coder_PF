@@ -68,9 +68,16 @@ export const products = async (req,res,next) => {
         const products = await getAllProds() // está sin paginate para usar el .lean() en el dao, sino no podia agregar el cid desp
         
         if(products){
-            products.forEach(prod => prod.cid = cid)
-        } // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
+            products.forEach(prod => {
+                prod.cid = cid
 
+                if(prod.owner === user.email){
+                    prod.isOwner = true
+                } else {
+                    prod.isOwner = false
+                }
+            })
+        } // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
         let isAdmin = user.role === "admin"
         return res.render('products', {
             title: 'Productos',

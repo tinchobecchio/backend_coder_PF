@@ -41,6 +41,7 @@ const addToCart = (cid, pid) => {
                             icon: "success",
                             title: 'Success!',
                             showDenyButton: true,
+                            denyButtonColor: '#3085d6',
                             text: data.message,
                             confirmButtonText: 'Continue',
                             denyButtonText: 'Go to Cart',
