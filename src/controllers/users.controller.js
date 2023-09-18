@@ -30,12 +30,12 @@ export const changeRole = async(req,res,next)=>{
             }
 
             await updateRole(uid,'premium')
-            return res.status(200).json({status: "success", message: 'Role changed to premium'})
+            return res.status(200).json({status: "success", message: 'Role changed to premium. If the user is online he must logout first to see the changes.'})
         }
 
         if(user.role === "premium") {
             await updateRole(uid,'user')
-            return res.status(200).json({status: "success", message: 'Role changed to user'})
+            return res.status(200).json({status: "success", message: 'Role changed to user. If the user is online he must logout first to see the changes.'})
         }
         
         // si no era ni user ni premium error
