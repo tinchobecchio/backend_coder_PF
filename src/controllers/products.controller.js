@@ -3,7 +3,6 @@ import EErrors from '../services/errors/enums.js'
 import { generateProductErrorInfo } from '../services/errors/info.js'
 import { getAllProducts, getProdById, getProd, addNewProduct, updateProd, deleteProd } from '../services/products.service.js'
 import { transporter } from '../utils/nodemailer.js'
-import config from '../config/config.js'
 
 // Devuelve todos los productos o la cantidad deseada con limit
 // ej http://localhost:4000/api/products?limit=3&sort=1&page=2&category=alimentos&status=true
@@ -139,14 +138,15 @@ export const deleteProduct = async (req,res,next) => {// El premium solo puede b
         }
 
         // si es un producto de un usuario Premium le avisa por mail que el producto fue eliminado
-        if(product.owner !== config.admin_email){ // si no lo hizo el admin lo hizo un premium
+        if(product.owner !== "admin"){ // si no lo hizo el admin lo hizo un premium
             // Enviarle un correo 
             await transporter.sendMail({
+                from: 'NewStore',
                 to: product.owner,
                 subject:'Product deleted',
                 html:`
                 <div>
-                    <h1>The Product ${product.title} has been deleted.</h1>
+                    <h1>The Product "${product.title}" has been deleted.</h1>
                 </div>`
             })
         }

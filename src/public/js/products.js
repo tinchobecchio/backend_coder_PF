@@ -1,3 +1,46 @@
+const deleteProd = (pid, title) => {
+    const URL = `/api/products/${pid}`
+    
+    Swal.fire({
+        icon: 'warning',
+        title: 'Do you want to delete this product?',
+        text: title,
+        confirmButtonText: 'Delete it!',
+        showCancelButton: true,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            fetch(URL, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if(data.status === "success"){
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Success!',
+                            text: data.message,
+                            confirmButtonText: 'OK!',
+                            allowOutsideClick: false
+                          })
+                          .then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload()
+                            }
+                          })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ooops...',
+                            text: 'Something went wrong',
+                            confirmButtonText: 'OK',
+                            allowOutsideClick: false
+                        })
+                    }
+                })
+        }
+    })
+}
+
 const addToCart = (cid, pid) => {
 
     // para que el usuario ingrese una cantidad
@@ -53,20 +96,6 @@ const addToCart = (cid, pid) => {
                                 location.href="/cart"
                             }
                           })
-                        //   Swal.fire({
-                        //     title: 'Do you want to save the changes?',
-                        //     showDenyButton: true,
-                        //     showCancelButton: true,
-                        //     confirmButtonText: 'Save',
-                        //     denyButtonText: `Don't save`,
-                        //   }).then((result) => {
-                        //     /* Read more about isConfirmed, isDenied below */
-                        //     if (result.isConfirmed) {
-                        //       Swal.fire('Saved!', '', 'success')
-                        //     } else if (result.isDenied) {
-                        //       Swal.fire('Changes are not saved', '', 'info')
-                        //     }
-                        //   })
                     }
                     // mostrar error si paso algo
                     if(data.status === 'error'){
@@ -79,7 +108,7 @@ const addToCart = (cid, pid) => {
                         })
                     }
                 })
-                .catch(err => {
+                .catch((err) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Ooops...',
