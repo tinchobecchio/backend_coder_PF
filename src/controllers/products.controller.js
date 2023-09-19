@@ -6,9 +6,7 @@ import { transporter } from '../utils/nodemailer.js'
 import config from '../config/config.js'
 
 // Devuelve todos los productos o la cantidad deseada con limit
-// ej url valida http://localhost:4000/api/products?limit=3&sort=1&page=2&category=alimentos&status=true
-// esta ruta no la uso, en la vista de productos directamente llama al service para que traiga los prods sin el paginate
-// para agregarle el cid a cada prod y asi añadirlo al carrito si lo clickea (problemas del handlebars)
+// ej http://localhost:4000/api/products?limit=3&sort=1&page=2&category=alimentos&status=true
 export const getProducts = async (req,res,next) => {
     try {
         let { limit, sort, page, category, status } = req.query

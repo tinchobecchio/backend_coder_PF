@@ -64,12 +64,16 @@ export const products = async (req,res,next) => {
     try {
         const user = req.user
         const cid = `${user.cart}`
-  
-        const products = await getAllProds() // está sin paginate para usar el .lean() en el dao, sino no podia agregar el cid desp
-        
+
+        // ---- con paginate----
+        let { status, category, limit, page, sort } = req.query
+        const paginate = await getAllProducts(status, category, limit, page, sort) 
+        const products = paginate.docs
+        // console.log(paginate)
+
         if(products){
             products.forEach(prod => {
-                prod.cid = cid
+                prod.cid = cid // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
 
                 if(prod.owner === user.email){
                     prod.isOwner = true
@@ -77,7 +81,7 @@ export const products = async (req,res,next) => {
                     prod.isOwner = false
                 }
             })
-        } // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
+        } 
         let isAdmin = user.role === "admin"
         return res.render('products', {
             title: 'Productos',
