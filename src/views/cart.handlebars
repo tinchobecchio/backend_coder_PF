@@ -31,61 +31,34 @@
   </div>
 </nav>
 
-{{!-- <div class="container text-center">
-    <h2 class="mt-4">Cart</h2>
-    <div class="row mt-5">
-        {{#if products}}
-            {{#each products}}
-                <div class="col-4 mb-4">
-                    <div class="card" >
-                        <h5 class="card-header">{{this.id_prod.title}}</h5>
-                        <img src={{this.id_prod.thumbnails}} class="card-img-top" alt="{{this.id_prod.description}}">
-                        <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{this.id_prod.description}}</h6>
-                            <p class="card-text">UNITARY PRICE: ${{this.id_prod.price}}</p>
-                            <p class="card-text">QUANTITY: {{this.cant}}</p>
-                            <button class="btn btn-primary" onclick="deleteFromCart('{{this.cid}}','{{this.id_prod._id}}')">Remove</button>
-                        </div>
-                    </div>
-                </div>
-            {{/each}}
-            <div class="col-12 mb-4">
-                <button class="btn btn-primary" onclick="purchaseCart('{{cid}}')">Buy all products</button>
-                <button class="btn btn-primary" onclick="resetCart('{{cid}}')">Reset cart</button>
-            </div>
-        {{else}}
-        <div class="container text-center mt-3">
-          <h5>Nothing here...</h5>
-          <button class="btn btn-primary mt-5" onclick="location.href='/products'">Go to Products</button>
-        </div>
-        {{/if}}
-    </div>
-</div> --}}
 <h2 class="text-center my-4">Cart</h2>
 {{#if products}}
-  <div class="container mt-4">
-    <div class="row align-items-center">
-      <div class="col-7 me-auto">
+  <div class="container">
+    <div class="row justify-content-center justify-content-lg-between g-4">
+      <div class="col-12 col-lg-6">
         <ul class="list-group">
           {{#each products}}
             <li class="list-group-item p-1">
               <div class="container text-center">
                 <div class="row my-2">
-                  <div class="col-3">
+                  
+                  <div class="col-xs-6 col-sm-4">
                     <img src={{this.id_prod.thumbnails}} alt="{{this.id_prod.description}}" class="img-thumbnail mt-1">
                   </div>
+
                   <div class="col d-flex flex-column justify-content-center">
-                    <span class="fs-4 fw-semibold">{{this.id_prod.title}}</span>
-                    <span class="fs-6 fw-medium">{{this.id_prod.description}}</span>
-                    <span class="fs-6">Unitary Price: ${{this.id_prod.price}}</span>
-                    <span class="fs-6">Available: {{this.id_prod.stock}}</span>
+                    <span class="fs-5 fw-semibold py-3 py-md-0">{{this.id_prod.title}}</span>
+                    <span class="fs-6">{{this.id_prod.description}}</span>
+                    <span class="fs-6 fw-lighter">Unitary Price: ${{this.id_prod.price}}</span>
+                    <span class="fs-6 fw-lighter">Available: {{this.id_prod.stock}}</span>
                   </div>
-                  <div class="col-3 text-center d-flex flex-column justify-content-evenly">
-                    <div>
-                      <span class="fs-6 fw-medium d-block">Quantity:</span>
-                      <span class="fs-5 fw-semibold d-block">x {{this.cant}}</span>
+
+                  <div class="col-xs-10 col-sm-3 text-center d-flex flex-column justify-content-evenly mb-3 mb-md-0">
+                    <div class="my-3 my-md-0">
+                      {{!-- <span class="fs-6 d-block">Quantity:</span> --}}
+                      <span class="fs-5 fw-medium d-block"><span class="fs-6 fw-lighter">x</span> {{this.cant}}</span>
                     </div>
-                    <div>
+                    <div class="">
                       <button class="btn btn-primary" title="Edit quantity" onclick="editQuantity('{{this.cid}}','{{this.id_prod._id}}',{{this.cant}})">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
                       </button>
@@ -102,8 +75,8 @@
         </ul>
 
       </div>
-      <div class="col-4">
-        <div>
+      <div class="col-10 col-lg-5 ">
+        <div class="">
           <h3>Resume</h3>
           <hr>
           <ul class="list-group list-group-flush my-4">

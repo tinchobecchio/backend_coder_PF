@@ -50,7 +50,7 @@ const addToCart = (cid, pid) => {
         inputValue: 1,
         inputAttributes: {
             min: 1,
-            step: 1
+            step: 1,
         },
         showCancelButton: true,
         confirmButtonText: 'Add to cart!',
@@ -58,6 +58,9 @@ const addToCart = (cid, pid) => {
         inputValidator: (value) => {
             if (!value) {
               return 'You need to write something!'
+            }
+            if (parseInt(value) < 0) {
+              return 'Please enter a positive number'
             }
         }
     })
