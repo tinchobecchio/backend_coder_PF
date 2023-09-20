@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
-import { getAllProds, getAllProducts } from '../services/products.service.js'
+import { getAllProducts } from '../services/products.service.js'
 import { getProducts } from '../services/cart.service.js'
 import { findByEmail, getAllUsers, getDocs } from '../services/users.service.js'
+
 // Login '/'
 export const login = (req,res,next) => {
     // Si ya esta logueado lo manda a la vista de productos
@@ -73,7 +74,7 @@ export const products = async (req,res,next) => {
 
         if(products){
             products.forEach(prod => {
-                prod.cid = cid // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
+                prod.cid = cid
 
                 if(prod.owner === user.email){
                     prod.isOwner = true
@@ -83,6 +84,27 @@ export const products = async (req,res,next) => {
             })
         } 
         let isAdmin = user.role === "admin"
+
+        // variables para la paginacion en handlebars
+        let totalPages = paginate.totalPages
+        let currentPage = parseInt(page, 10) || 1
+        let pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+        pages.push({
+            pageNumber: i,
+            isCurrent: i === currentPage
+        });
+        }
+        let currentPageGreaterThanOne = currentPage > 1;
+        let currentPageLessThanTotal = currentPage < totalPages;
+        let currentPageMinusOne = currentPage - 1;
+        let currentPagePlusOne = currentPage + 1;
+        let queryObject = { ...req.query };
+        delete queryObject.page;
+        let query = Object.keys(queryObject).map(key => `${key}=${queryObject[key]}`).join('&');
+        let prev = `?${query}&page=${currentPageMinusOne}`
+        let next = `?${query}&page=${currentPagePlusOne}`
+
         return res.render('products', {
             title: 'Productos',
             first_name: user.first_name,
@@ -90,7 +112,16 @@ export const products = async (req,res,next) => {
             products: products,
             role: user.role,
             isAdmin: isAdmin,
-            cid: cid
+            cid: cid,
+            currentPage,
+            totalPages,
+            currentPageGreaterThanOne,
+            currentPageLessThanTotal,
+            pages,
+            currentPageMinusOne,
+            currentPagePlusOne,
+            prev,
+            next
         })
     } catch (error) {
         console.log(error)
@@ -114,18 +145,14 @@ export const cart = async (req,res,next) => {
     try {
         const user = req.user
         const cid = `${user.cart}`
-    // let products = await fetch(`http://localhost:4000/api/carts/${user.cart}`)
-    //     .then(res => res.json())
-    //     .then(data => data.payload)
-    //     .catch(err => console.error(err))
-        // tuve que acceder directamente al servicio porque con el fetch se pierde la autorizacion cuando hace la consulta
+
         let products = await getProducts(cid)
         let prods = products.toObject()
         
         let total = 0
         if(prods[0]){
             prods.forEach(prod => {
-                prod.cid = cid // esto es porque no me tomaba cid en la plantilla cuando renderizaba los productos
+                prod.cid = cid 
                 prod.sum = prod.id_prod.price * prod.cant // para facilitar la suma total
                 total += prod.sum
             })

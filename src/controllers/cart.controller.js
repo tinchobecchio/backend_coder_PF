@@ -242,7 +242,7 @@ export const purchase = async (req,res,next) => {
                 return res.status(200).json({status: "success", message: 'Some products do not have enough stock and were returned to the cart. We have sent you an email with your purchase information.', order: newTicket})
             }
             // Si se pudo comprar todo
-            return res.status(200).json({status: "success", message: 'A ticket with your order has been sent to your email.', order: newTicket})
+            return res.status(200).json({status: "success", message: 'We have sent you an email with your purchase information.', order: newTicket})
         
         } else if (!newTicket.ticket && newTicket.not_purchased){ // si no se pudo comprar nada
             return res.status(200).json({status: "error", message: 'The products do not have enough stock'})

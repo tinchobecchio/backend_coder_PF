@@ -117,8 +117,39 @@
     </div>
 
   {{/if}}
-</div>
+  
+  <div class="d-flex justify-content-center">
+    <nav>
+      <ul class="pagination">
+        {{#if currentPageGreaterThanOne}}
+          <li class="page-item">
+            <a class="page-link" href="{{prev}}">Previous</a>
+          </li>
+        {{else}}
+          <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+          </li>
+        {{/if}}
 
+        <li class="page-item">
+          <span class="page-link text-reset">Page {{currentPage}} of {{totalPages}}</span>
+        </li>
+
+        {{#if currentPageLessThanTotal}}
+          <li class="page-item">
+            <a class="page-link" href="{{next}}">Next</a>
+          </li>
+        {{else}}
+          <li class="page-item disabled">
+            <span class="page-link">Next</span>
+          </li>
+        {{/if}}
+      </ul>
+    </nav>
+
+  </div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/products.js"></script>

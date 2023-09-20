@@ -66,22 +66,10 @@ const resetCart = (cid) => {
 
 const purchaseCart = (cid) => {
     const URL = `/api/carts/${cid}/purchase`
-    // console.log(URL);
     fetch(URL)
     .then(response => response.json())
-    // .then(res => {
-
-    //     if(res.order.products?.length > 0){
-    //         alert('Success')
-    //     }
-    //     if(res.order.not_purchased?.length > 0){
-    //         alert('The products without stock remain in the cart')
-    //     }
-
-    //     location.reload()
-    // })
     .then(data => {
-        console.log(data)
+        // console.log(data)
         if(data.status === 'success'){
             Swal.fire({
                 icon: "success",
@@ -112,8 +100,12 @@ const editQuantity = (cid, pid, cant) => {
     // para que el usuario ingrese una nueva cantidad
     Swal.fire({
         title: 'Enter a quantity',
-        input: 'text',
+        input: 'number',
         inputValue: cant,
+        inputAttributes: {
+            min: 1,
+            step: 1,
+        },
         showCancelButton: true,
         confirmButtonText: 'Change it!',
         allowOutsideClick: false,

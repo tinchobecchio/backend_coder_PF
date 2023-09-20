@@ -24,7 +24,7 @@ export default (error,req,res,next) => {
             break;
         default:
             req.logger.error('Unhandled Error')
-            res.status(500).send({ status: "Error", error: "Unhandled error" });
+            res.status(500).send({ status: "Error", error: "Unhandled error", errorData: error });
             break;
     }
 }

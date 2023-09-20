@@ -1,7 +1,6 @@
 import { create } from 'express-handlebars';
 
 export const hbs = create({
-    // Specify helpers which are only registered on this instance.
     helpers: {
         roleClass() {
             switch (this.role) {
