@@ -12,10 +12,13 @@
             <a class="nav-link" href="/adminPanel">Admin Panel</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Products</a>
+            <a class="nav-link"  href="/products">Products</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Premium</a>
           </li>
         {{else}}
           <li class="nav-item">
@@ -30,6 +33,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/chat">Chat</a>
           </li>
+          {{#unless isUser}}
+          <li class="nav-item">
+            <a class="nav-link" href="#">Premium</a>
+          </li>
+          {{/unless}}
         {{/if}}
       </ul>
     </div>
@@ -119,12 +127,12 @@
                     
                     <div class="col-md-6">
                         <label for="stock" class="form-label">Stock</label>
-                        <input type="number" class="form-control" id="stock" name="stock" placeholder="stock" required>
+                        <input type="number" class="form-control" min="0" id="stock" name="stock" placeholder="stock" required>
                     </div>
                     
                     <div class="col-md-6">
                         <label for="price" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="price" required>
+                        <input type="number" class="form-control" min="0" id="price" name="price" placeholder="price" required>
                     </div>
 
                     <div class="col-12">

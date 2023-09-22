@@ -44,6 +44,7 @@ export const profile = async(req,res,next) => {
             imgProfile = profileDoc.reference
         }
         let isAdmin = user.role === "admin"
+        let isUser = user.role === "user"
         return res.render('profile', {
             title: 'Perfil',
             first_name: user.first_name,
@@ -53,7 +54,8 @@ export const profile = async(req,res,next) => {
             role: user.role,
             imgProfile: imgProfile,
             uid: uid,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            isUser: isUser
         })
     } catch (error) {
         console.log(error);
@@ -84,6 +86,7 @@ export const products = async (req,res,next) => {
             })
         } 
         let isAdmin = user.role === "admin"
+        let isUser = user.role === "user"
 
         // variables para la paginacion en handlebars
         let totalPages = paginate.totalPages
@@ -112,6 +115,7 @@ export const products = async (req,res,next) => {
             products: products,
             role: user.role,
             isAdmin: isAdmin,
+            isUser: isUser,
             cid: cid,
             currentPage,
             totalPages,
@@ -158,6 +162,8 @@ export const cart = async (req,res,next) => {
             })
         } 
         
+        let isUser = user.role === "user"
+
         return res.render('cart', {
             title: 'Cart',
             products: prods,
@@ -165,7 +171,8 @@ export const cart = async (req,res,next) => {
             first_name: user.first_name,
             last_name: user.last_name,
             role: user.role,
-            total: total
+            total: total,
+            isUser: isUser
         })
 
     } catch (error) {
@@ -210,6 +217,7 @@ export const newPass = (req,res) => {
     return res.render('newPass',{title: 'Reset Password', success: success})
 }
 
+// Panel del admin
 export const adminPanel = async(req,res,next) => {
     try {
         const user = req.user
@@ -249,13 +257,17 @@ export const editProd = async (req,res,next) => {
             category: product.category,
             owner: product.owner
         }
+        let isAdmin = user.role === "admin"
+        let isUser = user.role === "user"
 
         return res.render('editProd', {
             title: 'Edit Product',
             first_name: user.first_name,
             last_name: user.last_name,
             role: user.role,
-            prod: prod
+            prod: prod,
+            isAdmin,
+            isUser
         })
 
     } catch (error) {
@@ -294,13 +306,15 @@ export const premium = async (req,res,next) => {
             }))
         }
 
+        let isUser = user.role === "user"
         return res.render('premium', {
             title: 'Premium',
             first_name: user.first_name,
             last_name: user.last_name,
             role: user.role,
             products: products,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            isUser
         })
 
     } catch (error) {
