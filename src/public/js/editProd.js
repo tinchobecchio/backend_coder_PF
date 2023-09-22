@@ -55,3 +55,45 @@ form.onsubmit = async (e) => {
             }
         })
 }
+
+const deleteProd = (pid, title) => {
+    const URL = `/api/products/${pid}`
+    
+    Swal.fire({
+        icon: 'warning',
+        title: 'Do you want to delete this product?',
+        text: title,
+        confirmButtonText: 'Delete it!',
+        showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(URL, { method: 'DELETE' })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if(data.status === "success"){
+                            Swal.fire({
+                                icon: "success",
+                                title: 'Success!',
+                                text: data.message,
+                                confirmButtonText: 'OK!',
+                                allowOutsideClick: false
+                            })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href="/premium"
+                                }
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ooops...',
+                                text: 'Something went wrong',
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false
+                            })
+                        }
+                    })
+            }
+    })
+}
