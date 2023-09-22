@@ -36,7 +36,7 @@
   <div class="container">
     <div class="row justify-content-center justify-content-lg-between g-4">
       <div class="col-12 col-lg-6">
-        <ul class="list-group">
+        <ul class="list-group shadow">
           {{#each products}}
             <li class="list-group-item p-1">
               <div class="container text-center">
@@ -76,12 +76,12 @@
 
       </div>
       <div class="col-10 col-lg-5 ">
-        <div class="">
+        <div class="p-4 p-sm-5 pt-sm-4 border rounded-3 bg-light shadow-sm">
           <h3>Resume</h3>
           <hr>
           <ul class="list-group list-group-flush my-4">
             {{#each products}}
-            <li class="list-group-item">
+            <li class="list-group-item rounded-4">
               <div class="hstack gap-3">
                 <span><span class="badge bg-primary rounded-pill mx-1">{{this.cant}}</span> {{this.id_prod.title}}</span>
                 <span class="ms-auto">${{this.sum}}</span>
@@ -90,11 +90,12 @@
             {{/each}}
           </ul>
           <hr>
-          <h4 class="text-end">Total: ${{this.total}}</h4>
-        </div>
+          <p class="fs-5 fw-normal text-center">Total: $<span class="fs-4 fw-semibold">{{this.total}}</span></p>
+          <hr>
         <div class="col-12 mt-5 text-center d-flex gap-2 justify-content-center">
           <button class="btn btn-success" onclick="purchaseCart('{{cid}}')">Checkout</button>
           <button class="btn btn-danger" onclick="resetCart('{{cid}}')">Reset cart</button>
+        </div>
         </div>
       </div>
     </div>
