@@ -47,13 +47,12 @@
   <h2 class="my-5" id="titulo">Products</h2>
   {{#if isAdmin}}
 
-    {{!-- <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 gy-4 mb-4"> --}}
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 gy-4 mb-4">
       {{#each products}}
         <div class="col">
-          <div class="card h-100">
+          <div class="card h-100 shadow">
             <div class="card-header">
-              <span class="fs-5 fw-medium">{{this.title}}</span>
+              <span class="fw-medium">{{this.title}}</span>
             </div>
             <img src={{this.thumbnails}} class="card-img p-4" alt="{{this.description}}">
 
@@ -69,7 +68,7 @@
             </div>
             
             <div class="col-auto my-4">
-              <button class="btn btn-primary mx-2">Edit</button>
+              <button class="btn btn-primary mx-2" onclick="location.href='/edit-product/{{this._id}}'">Edit</button>
               <button class="btn btn-danger" onclick="deleteProd('{{this._id}}','{{this.title}}')">Delete</button>
             </div>
 
@@ -80,7 +79,6 @@
 
   {{else}}
 
-    {{!-- <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 gy-4 mb-4"> --}}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 gy-4 mb-5">
       {{#each products}}
       <div class="col">
