@@ -47,44 +47,38 @@
 <div class="container-fluid mt-3">
   <h2 class="my-4 text-center">Profile</h2>
   <div class="row justify-content-center g-4 mx-md-4">
-    {{!-- <div class="col-3">
-      <img src={{imgProfile}} class="img-thumbnail">
-    </div>
-    <div class="col-3">
-      <h2>{{first_name}} {{last_name}}</h2>
-      <p>Role: {{role}}</p>
-      <p>Gender: {{gender}}</p>
-      <p>Age: {{age}}</p>
-    </div> --}}
 
     <div class="col-11 col-sm-5">
-      <div class="card mb-3 col-12 shadow-sm p-3 bg-body-tertiary rounded">
-        <div class="row g-2 p-2 py-3">
-          <div class="col-md-4 me-2">
-            <img src="{{imgProfile}}" class="img-fluid rounded-start" alt="...">
-          </div>
-          <div class="col-md-7 text-center text-md-start">
-            <div class="col d-flex flex-column justify-content-center g-2 my-2">
-              <h5 class="card-title">{{first_name}} {{last_name}}</h5>
-              <span class="fs-6 fw-normal">Gender: {{gender}}</span>
-              <span class="fs-6 fw-normal">Role: {{role}}</span>
+      <div class="row g-2">
+        <div class="card mb-3 col-12 shadow-sm p-3 bg-body-tertiary rounded">
+          <div class="row g-2 p-2 py-3">
+            <div class="col-md-4 me-2">
+              <img src="{{imgProfile}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-7 text-center text-md-start">
+              <div class="col d-flex flex-column justify-content-center g-2 my-2">
+                <h5 class="card-title">{{first_name}} {{last_name}}</h5>
+                <span class="fs-6 fw-normal">Age: {{age}}</span>
+                <span class="fs-6 fw-normal">Gender: {{gender}}</span>
+                <span class="fs-6 fw-normal">Role: {{role}}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card col-12 shadow-sm p-4 bg-body-tertiary rounded">
-          <h4 class="fs-5 fw-semibold text-center text-md-start">Change your Image</h4>
-          <form id="img-form" name="{{uid}}">
-            <div class="mb-3">
-              <label for="profiles" class="form-label">New Image</label>
-              <input class="form-control" type="file" id="profiles" name="profiles">
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">Change it!</button>
-            </div>
-          </form>
-      </div>
+        <div class="card col-12 shadow-sm p-4 bg-body-tertiary rounded">
+            <h4 class="fs-5 fw-semibold text-center text-md-start">Change your Image</h4>
+            <form id="img-form" name="{{uid}}">
+              <div class="mb-3">
+                <label for="profiles" class="form-label">New Image</label>
+                <input class="form-control" type="file" id="profiles" name="profiles">
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Change it!</button>
+              </div>
+            </form>
+        </div>
 
+      </div>
 
     </div>
 
@@ -92,6 +86,7 @@
       <div class="col-11 col-sm-6">
         <form id="documentation-form" class="h-100 border rounded-3 bg-light p-4 p-sm-5 pt-sm-4 shadow-sm" name="{{uid}}">
           <h4 class="fs-5 fw-semibold text-center text-md-start">Documentation</h4>
+          
           <div class="mb-3">
             <label for="documents-id" class="form-label">ID</label>
             <input class="form-control" type="file" id="documents-id" name="documents-id">
@@ -104,25 +99,16 @@
             <label for="documents-account" class="form-label">Account state</label>
             <input class="form-control" type="file" id="documents-account" name="documents-account">
           </div>
+
+          <small class="d-block my-2 text-muted">Upload all your documents to become a Premium User!</small>
           <div class="col-12 py-2">
             <button type="submit" class="btn btn-primary">Upload your files</button>
           </div>
+          
         </form>
       </div>
 
     {{/unless}}
-      {{!-- <div class="col-4">
-        <h4>Change your Profile Image</h4>
-        <form id="img-form" name="{{uid}}">
-          <div class="mb-3">
-            <label for="profiles" class="form-label">New Image</label>
-            <input class="form-control" type="file" id="profiles" name="profiles">
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">Change it!</button>
-          </div>
-        </form>
-      </div> --}}
 
   </div>
 </div>

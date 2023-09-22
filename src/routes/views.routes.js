@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, signUp, profile, products, errorLogin, errorSignUp, cart, resetPass, resetPassMailSent, resetPassError, newPass, adminPanel } from "../controllers/views.controller.js";
+import { login, signUp, profile, products, errorLogin, errorSignUp, cart, resetPass, resetPassMailSent, resetPassError, newPass, adminPanel, editProd } from "../controllers/views.controller.js";
 import { customJWTPolicy } from "../middlewares/auth.js";
 
 import { mockingProds } from "../controllers/mocking.controller.js";
@@ -29,5 +29,7 @@ viewsRouter.get('/resetpass/newpass/:token', customJWTPolicy(["PUBLIC"]), newPas
 // vista para el admin
 viewsRouter.get('/adminPanel', customJWTPolicy(["ADMIN"]), adminPanel)
 
+// vista para editar productos
+viewsRouter.get('/edit-product/:pid', customJWTPolicy(["ADMIN", "PREMIUM"]), editProd)
 
 export default viewsRouter;

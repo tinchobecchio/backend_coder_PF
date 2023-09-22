@@ -90,12 +90,7 @@ export const updateProduct = async (req,res,next) => { // El premium solo puede 
         // si es un usuario premium y no es un producto suyo devuelve error
         const product = await getProdById(pid) 
         if(req.user.role === "premium" && product.owner !== req.user.email){
-            CustomError.createError({
-                name:"Updating product error",
-                cause: "The product doesn't belong to the user",
-                message:"You can't modify other's products",
-                code:EErrors.AUTHORIZATION_ERROR
-            })
+            return res.status(200).json({status: "error", message:"You can't modify other's products"})
         }
 
         // en caso que este todo bien lo modifica

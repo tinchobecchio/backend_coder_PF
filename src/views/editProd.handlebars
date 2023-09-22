@@ -1,0 +1,127 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">NewStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        {{#if isAdmin}}
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel">Admin Panel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+        {{else}}
+          <li class="nav-item">
+            <a class="nav-link" href="/products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cart">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/chat">Chat</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+
+    <div class="d-flex me-3 pt-2">
+      <h6>{{first_name}} {{last_name}} <span class="{{roleClass}} shadow-sm">{{role}}</span></h6>
+    </div>
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/api/sessions/logout'">Logout</button>
+    </div>
+  </div>
+</nav>
+<div class="container">
+    <h2 class="my-4 text-center">Edit Product</h2>
+
+    <div class="row justify-content-center g-5">
+        <div class="col-11 col-md-5 col-lg-4 text-center">
+            <div class="card shadow">
+                <div class="card-header">
+                    <span class="fs-5 fw-medium">{{prod.title}}</span>
+                </div>
+                <div class="text-center">
+                    <img src={{prod.thumbnails}} class="card-img p-4 w-75" alt="{{prod.description}}">
+                </div>
+
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{prod.description}}</h6>
+                <div class="col d-flex flex-column justify-content-center align-items-center my-2">
+                    <span class="fs-6 fw-lighter"><strong>Category:</strong> {{prod.category}}</span>
+                    <span class="fs-6 fw-lighter"><strong>Code:</strong> {{prod.code}}</span>
+                    <span class="fs-6 fw-lighter"><strong>Stock:</strong> {{prod.stock}}</span>
+                    <span class="fs-6 fw-lighter"><strong>Owner:</strong> {{prod.owner}}</span>
+                </div>
+                <div>
+                    <span class="fs-5 fw-medium">${{prod.price}}</span>
+                </div>
+                
+                <div class="col-auto my-4">
+                    <button class="btn btn-danger" onclick="deleteProd('{{prod._id}}','{{prod.title}}')">Delete Product</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-11 col-md-6">
+            <form id="editProductForm" name="{{prod._id}}" class="p-4 p-sm-5 pt-sm-4 border rounded-3 bg-light">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="title" value="{{prod.title}}" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" name="description" id="description" placeholder="description" value="{{prod.description}}" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" class="form-control" name="category" id="category" value="{{prod.category}}" placeholder="category" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="code" class="form-label">Code</label>
+                        <input type="text" class="form-control" id="code" name="code" value="{{prod.code}}" placeholder="code" required>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="stock" name="stock" value="{{prod.stock}}" placeholder="stock" required>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" value="{{prod.price}}" placeholder="price" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="thumbnails" class="form-label">URL image</label>
+                        <input type="text" class="form-control" name="thumbnails" id="thumbnails" placeholder="thumbnails" value="{{prod.thumbnails}}" required>
+                    </div>
+
+                </div>
+                
+                <button class="w-100 btn btn-primary btn-lg mt-4" type="submit">Submit changes</button>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/editProd.js"></script>

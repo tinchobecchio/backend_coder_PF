@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { getAllProducts } from '../services/products.service.js'
+import { getAllProducts, getProdById } from '../services/products.service.js'
 import { getProducts } from '../services/cart.service.js'
 import { findByEmail, getAllUsers, getDocs } from '../services/users.service.js'
 
@@ -228,4 +228,37 @@ export const adminPanel = async(req,res,next) => {
     } catch (error) {
         console.log(error);
     } 
+}
+
+// Editar producto (para admin y premium)
+export const editProd = async (req,res,next) => {
+    try {
+        const user = req.user
+        const { pid } = req.params
+
+        const product = await getProdById(pid)
+        
+        let prod = {
+            _id: product._id,
+            title: product.title,
+            description: product.description,
+            code: product.code,
+            price: product.price,
+            stock: product.stock,
+            thumbnails: product.thumbnails,
+            category: product.category,
+            owner: product.owner
+        }
+
+        return res.render('editProd', {
+            title: 'Edit Product',
+            first_name: user.first_name,
+            last_name: user.last_name,
+            role: user.role,
+            prod: prod
+        })
+
+    } catch (error) {
+        next(error)
+    }
 }
