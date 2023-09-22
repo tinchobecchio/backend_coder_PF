@@ -102,7 +102,9 @@
               <span class="fw-medium">{{this.title}}</span>
             {{/if}}
           </div>
-          <img src={{this.thumbnails}} class="card-img p-4" alt="{{this.description}}">
+          <div class="h-100">
+            <img src={{this.thumbnails}} class="card-img object-fit-fill p-4" alt="{{this.description}}">
+          </div>
           <h6 class="card-subtitle mb-2 text-body-secondary">{{this.description}}</h6>
 
           <div class="col d-flex flex-column justify-content-center align-items-center my-2">

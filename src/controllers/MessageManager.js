@@ -6,12 +6,13 @@ export class MessageManager {
     // Crea un mensaje nuevo
     async createMsg(user, message) {
         try {
-            await Messages.create(
+            let msg = await Messages.create(
                 {
                     user,
                     message
                 }
             )
+            return msg
         } catch (error) {
             // console.log(error);
             logger.error(error)

@@ -36,8 +36,8 @@
   </div>
 </nav>
 
-<div class="container">
-    <h1 class="mt-4">Community Chat</h1>
+{{!-- <div class="container">
+    <h2 class="my-4 text-center">Community Chat</h2>
 
     <div class="row">
         <div class="col-md-8">
@@ -63,9 +63,44 @@
         </div>
 
     </div>
+</div> --}}
+
+
+{{!-- nuevooo --}}
+<div class="container">
+    <h2 class="my-4 text-center">Community Chat</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class=" p-2 border rounded-3 bg-dark-subtle shadow-sm">
+              <div class="border rounded-3 bg-light" >
+                  <ul class="list-unstyled list-group p-4 py-3" id="messageLogs" style="height: 20em; overflow-y: scroll;"></ul>
+              </div>
+            </div>
+
+            <div class="mt-4 p-2 border rounded-3 bg-light shadow-sm">
+                <label for="chatBox" class="form-label">Send a message:</label>
+                <input class="form-control" type="text" id="chatBox" placeholder="Press ENTER to send the message">
+            </div>
+        </div>
+
+        <div class="col-md-4" >
+            <div class="card mt-1">
+                <div class="card-header">
+                    Last connections:
+                </div>
+                <ul class="list-group list-group-flush" id="enLinea">
+                </ul>
+            </div>
+        </div>
+
+    </div>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"
-        integrity="sha512-AI5A3zIoeRSEEX9z3Vyir8NqSMC1pY7r5h2cE+9J6FLsoEmSSGLFaqMQw8SWvoONXogkfFrkQiJfLeHLz3+HOg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="/js/chat.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"
+  integrity="sha512-AI5A3zIoeRSEEX9z3Vyir8NqSMC1pY7r5h2cE+9J6FLsoEmSSGLFaqMQw8SWvoONXogkfFrkQiJfLeHLz3+HOg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/js/chat.js"></script>

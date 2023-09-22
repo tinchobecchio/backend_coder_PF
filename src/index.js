@@ -116,7 +116,51 @@ app.get('/*', (req,res,next) => {
 // Manejo de errores
 app.use(errorHandler);
 
-// Socket.io
+// // Socket.io
+// // Tuve que poner toda la logica aca en vez de en el chat.routes con el req.io
+// // porque cada vez que actualizaba la pagina se creaba otra conexion y me duplicaba los mensajes y los usuarios
+// const io = new Server(httpServer, { cors: { origin: "*" } });
+// const msg = new MessageManager();
+
+// let clients = [];
+// io.on("connection", (socket) => {
+//   console.log("Nuevo cliente conectado");
+
+//   socket.on("authOk", async (data) => {
+//     // cuando el usuario se autentico correctamente
+//     let messages = await msg.getMessages(); // trae los mensajes de la base de datos
+//     io.emit("messageLogs", messages); // le manda los mensajes del chat
+
+//     let text = `${data.user} se ha conectado`;
+//     socket.broadcast.emit("newConnection", text); // avisa al resto que se conecto
+
+//     if(clients.find(user => user.user === data.user)){ // si existe lo saca de la lista
+//       let filtered = clients.filter(user => user.user !== data.user)
+//       clients = filtered
+//     }
+//     clients.unshift(data); // lo agrega al principio de la lista
+
+//     if (clients.length > 9) {
+//       let listado = clients.slice(0, 9);
+//       io.emit("onlineConnections", listado);
+//     } else {
+//       io.emit("onlineConnections", clients);
+//     }
+//   });
+//   socket.on("message", async (data) => {
+//     // cuando escucha un nuevo mensaje
+//     try {
+//       await msg.createMsg(data.user, data.message);
+//       let messages = await msg.getMessages(); // trae los mensajes de la base de datos
+//       io.emit("messageLogs", messages); // emite un messageLogs con el array messages
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   });
+// });
+
+
+// Socket.io 2 -----------------------
 // Tuve que poner toda la logica aca en vez de en el chat.routes con el req.io
 // porque cada vez que actualizaba la pagina se creaba otra conexion y me duplicaba los mensajes y los usuarios
 const io = new Server(httpServer, { cors: { origin: "*" } });
@@ -127,9 +171,17 @@ io.on("connection", (socket) => {
   console.log("Nuevo cliente conectado");
 
   socket.on("authOk", async (data) => {
+
+
+
     // cuando el usuario se autentico correctamente
     let messages = await msg.getMessages(); // trae los mensajes de la base de datos
     io.emit("messageLogs", messages); // le manda los mensajes del chat
+
+
+
+
+
 
     let text = `${data.user} se ha conectado`;
     socket.broadcast.emit("newConnection", text); // avisa al resto que se conecto
@@ -147,12 +199,12 @@ io.on("connection", (socket) => {
       io.emit("onlineConnections", clients);
     }
   });
+
+  // cuando escucha un nuevo mensaje
   socket.on("message", async (data) => {
-    // cuando escucha un nuevo mensaje
     try {
-      await msg.createMsg(data.user, data.message);
-      let messages = await msg.getMessages(); // trae los mensajes de la base de datos
-      io.emit("messageLogs", messages); // emite un messageLogs con el array messages
+      let newMsg = await msg.createMsg(data.user, data.message); // lo crea y guarda en la base de datos
+      io.emit("newMessage", newMsg); // emite un evemto newMessage con el mensaje creado
     } catch (error) {
       console.log(error);
     }

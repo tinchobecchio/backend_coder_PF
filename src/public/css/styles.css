@@ -1,8 +1,0 @@
-.mensajes {
-    border: 1px solid black; 
-    padding: 1rem 2rem; 
-    border-radius: 5px;
-    height: 50vh;
-    overflow-x:auto;
-    overflow-y: scroll;
-}
