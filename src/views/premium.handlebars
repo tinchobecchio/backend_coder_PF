@@ -1,0 +1,148 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">NewStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        {{#if isAdmin}}
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel">Admin Panel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+        {{else}}
+          <li class="nav-item">
+            <a class="nav-link" href="/products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cart">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/chat">Chat</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+    
+    <div class="d-flex me-3 pt-2">
+      <h6>{{first_name}} {{last_name}} <span class="{{roleClass}} shadow-sm">{{role}}</span></h6>
+    </div>
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/api/sessions/logout'">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+    <h2 class="my-4 text-center">Premium</h2>
+
+    <div class="row justify-content-center g-5">
+        {{#if products}}
+            <div class="col-11 col-md-6">
+                {{#if isAdmin}}
+                    <h4 class="text-center my-3 fs-3 fw-semibold">List of products</h4>
+                {{else}}
+                    <h4 class="text-center my-3 fs-3 fw-semibold">Your products</h4>
+                {{/if}}
+                <ul class="list-group shadow">
+                    {{#each products}}
+                        <li class="list-group-item p-1">
+                            <div class="container text-center">
+                                <div class="row my-2">
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <img src={{this.thumbnails}} alt="{{this.description}}" class="img-thumbnail mt-1">
+                                    </div>
+
+                                    <div class="col d-flex flex-column justify-content-center">
+                                        <span class="fs-5 fw-semibold py-3 py-md-0">{{this.title}}</span>
+                                        <span class="fs-6">{{this.description}}</span>
+                                        <span class="fs-6">Code: {{this.code}}</span>
+                                    </div>
+
+                                    <div class="col-xs-10 col-sm-3 text-center d-flex flex-column justify-content-evenly mb-3 mb-md-0">
+                                        <div class="d-flex flex-column">
+                                            <button class="btn btn-primary mb-2" title="Edit product" onclick="location.href='/edit-product/{{this._id}}'">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
+                                            </button>
+                                            <button class="btn btn-danger" title="Delete product" onclick="deleteProd('{{this._id}}','{{this.title}}')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                                            </button>
+                                        </div>   
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/if}}
+
+        {{#if products}}
+        <div class="col-11 col-md-5">
+        {{else}}
+        <div class="col-11 col-sm-9 col-md-7">
+        {{/if}}
+            <h4 class="text-center my-3 fs-4 fw-semibold">New Product</h4>
+            <form id="newProductForm" class="p-4 p-sm-5 pt-sm-4 border rounded-3 bg-light">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="title" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" name="description" id="description" placeholder="description" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" class="form-control" name="category" id="category"placeholder="category" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="code" class="form-label">Code</label>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="code" required>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="stock" name="stock" placeholder="stock" required>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" placeholder="price" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="thumbnails" class="form-label">URL image</label>
+                        <input type="text" class="form-control" name="thumbnails" id="thumbnails" placeholder="thumbnails" required>
+                    </div>
+
+                </div>
+                
+                <button class="w-100 btn btn-primary btn-lg mt-4" type="submit">Create</button>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/premium.js"></script>

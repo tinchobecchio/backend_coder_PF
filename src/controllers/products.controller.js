@@ -59,12 +59,13 @@ export const addProduct = async (req,res,next) => {
         // Error si ya existe el producto con el code
         let producto = await getProd({code})
         if(producto) {
-            CustomError.createError({
-                name:"Product creation error",
-                cause: "There is another product with the same code",
-                message:"The product's code needs to be unique",
-                code:EErrors.INVALID_TYPES_ERROR
-            })
+            // CustomError.createError({
+            //     name:"Product creation error",
+            //     cause: "There is another product with the same code",
+            //     message:"The product's code needs to be unique",
+            //     code:EErrors.INVALID_TYPES_ERROR
+            // })
+            return res.status(200).json({status: "error", message:"The product's code needs to be unique"})
         }
 
         // Crea el producto
@@ -74,7 +75,7 @@ export const addProduct = async (req,res,next) => {
             prod.owner = req.user.email
         }
         const newProd = await addNewProduct(prod)
-        return res.status(200).json({status: "success", payload: newProd})
+        return res.status(200).json({status: "success", message:"Product created!", payload: newProd})
 
     } catch (error) {
         next(error);

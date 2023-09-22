@@ -12,7 +12,7 @@ class ProductsManager {
 
   async findAllPaginate(query, limit, page, sorter) {
     try {
-        const prods = await productsModel.paginate(query,{limit: limit ?? 10, page: page ?? 1, sort: sorter, lean: true})
+        const prods = await productsModel.paginate(query,{limit: limit ?? 8, page: page ?? 1, sort: sorter, lean: true})
       return prods
     } catch (error) {
       return error

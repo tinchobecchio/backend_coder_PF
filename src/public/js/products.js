@@ -13,7 +13,6 @@ const deleteProd = (pid, title) => {
             fetch(URL, { method: 'DELETE' })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     if(data.status === "success"){
                         Swal.fire({
                             icon: "success",

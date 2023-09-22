@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { getAllProducts, getProdById } from '../services/products.service.js'
+import { getAllProds, getAllProducts, getProdById } from '../services/products.service.js'
 import { getProducts } from '../services/cart.service.js'
 import { findByEmail, getAllUsers, getDocs } from '../services/users.service.js'
 
@@ -256,6 +256,51 @@ export const editProd = async (req,res,next) => {
             last_name: user.last_name,
             role: user.role,
             prod: prod
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+// Editar producto (para admin y premium)
+export const premium = async (req,res,next) => {
+    try {
+        const user = req.user
+        const productsDB = await getAllProds()
+        let products
+        let isAdmin = false
+
+        if (user.role === "premium") {
+            const filtered = productsDB.filter(prod => prod.owner === user.email) // para mostrarle solo los suyos
+            const formated = filtered.map(prod => ({
+                _id: prod._id,
+                title: prod.title,
+                code: prod.code,
+                description: prod.description,
+                thumbnails: prod.thumbnails
+            }))
+            products = formated
+        }
+
+        if(user.role === "admin") { 
+            isAdmin = true
+            products = productsDB.map(prod => ({
+                _id: prod._id,
+                title: prod.title,
+                code: prod.code,
+                description: prod.description,
+                thumbnails: prod.thumbnails
+            }))
+        }
+
+        return res.render('premium', {
+            title: 'Premium',
+            first_name: user.first_name,
+            last_name: user.last_name,
+            role: user.role,
+            products: products,
+            isAdmin: isAdmin
         })
 
     } catch (error) {
