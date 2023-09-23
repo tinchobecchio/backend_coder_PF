@@ -1,58 +1,6 @@
-// const socket = io()
-
-// let chatBox = document.getElementById('chatBox')
-// let listaOnline = document.getElementById('enLinea')
-// let user
-// fetch('/api/sessions/current')
-//     .then(res => res.json())
-//     .then(data => {
-//         user = `${data.user.first_name} ${data.user.last_name}`
-//         socket.emit('authOk', {user: user})
-//     })
-
-// chatBox.addEventListener('keyup', e => { // capturo el evento de soltar tecla
-//     if(e.key === 'Enter') { // si la tecla es enter
-//         if(chatBox.value.trim().length > 0) { // y el mensaje no esta vacio
-//             socket.emit('message', { // hago que el socket emita un mensaje
-//                 user: user,
-//                 message: chatBox.value
-//             })
-//             chatBox.value = '' // reinicio el chatbox
-//         }
-//     }
-// }) 
-
-// // Socket Listeners 
-// socket.on('messageLogs', data => { // Escucha el evento messageLogs
-//     let log = document.getElementById('messageLogs') // selecciono el elemento donde se muestran los msjs
-//     let messages = '' // creo variable para mensajes
-//     data.forEach(message => { // recorre el array de messages que pasan por el socket y lo guarda en messages
-//         messages += `<strong>${message.user}:</strong> ${message.message}</br>`
-//     })
-//     log.innerHTML = messages // muestra messages en el elemento seleccionado 
-// })
-
-// socket.on('newConnection', message => {
-    
-//     Swal.fire({
-//         text: message,
-//         toast: true,
-//         position: 'bottom-right' 
-//     })
-// })
-
-// socket.on('onlineConnections', arrayClients => {
-//     let conectados = ''
-//     arrayClients.forEach(client => {
-//         conectados += `<li class="list-group-item">${client.user}</li>`
-//     })
-//     listaOnline.innerHTML = conectados
-// })
-
-// nuevo ---------------------------
 const socket = io()
 
-let chatBox = document.getElementById('chatBox')
+let chatForm = document.getElementById('chatForm')
 let listaOnline = document.getElementById('enLinea')
 let user
 fetch('/api/sessions/current')
@@ -62,17 +10,25 @@ fetch('/api/sessions/current')
         socket.emit('authOk', {user: user})
     })
 
-chatBox.addEventListener('keyup', e => { // capturo el evento de soltar tecla
-    if(e.key === 'Enter') { // si la tecla es enter
-        if(chatBox.value.trim().length > 0) { // y el mensaje no esta vacio
-            socket.emit('message', { // hago que el socket emita un mensaje
-                user: user,
-                message: chatBox.value
-            })
-            chatBox.value = '' // reinicio el chatbox
-        }
+chatForm.onsubmit = async (e) => {
+
+    e.preventDefault()
+
+    //tomar la data
+    let formData = new FormData(chatForm)
+
+    // darle formato
+    let obj = {}
+    for (var entry of formData) {
+        obj[entry[0]] = entry[1]
     }
-}) 
+    obj.user = user
+
+    if(obj.message.trim().length > 0) { // si el mensaje no esta vacio
+        socket.emit('message', obj) // envia el msj
+        chatForm.reset()
+    }
+}
 
 const log = document.getElementById('messageLogs') // selecciono el elemento donde se muestran los msjs
 // Socket Listeners 

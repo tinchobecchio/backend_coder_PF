@@ -3,24 +3,25 @@
 <div class="container">
     <h2 class="my-4 text-center">Community Chat</h2>
 
-    <div class="row">
-        <div class="col-md-8">
-            <div class=" p-2 border rounded-3 bg-dark-subtle shadow-sm">
-              <div class="border rounded-3 bg-light" >
-                  <ul class="list-unstyled list-group p-4 py-3" id="messageLogs" style="height: 20em; overflow-y: scroll;"></ul>
-              </div>
+    <div class="row border rounded-3 bg-light p-4 shadow-sm">
+        <div class="col-md-8 order-2 order-md-1 mt-2 mt-md-0">
+            <div class="border rounded-3  bg-body p-3 shadow-sm" >
+                <ul class="list-unstyled list-group p-4 py-3" id="messageLogs" style="height: 20em; overflow-y: scroll;"></ul>
             </div>
 
-            <div class="mt-4 p-2 border rounded-3 bg-light shadow-sm">
-                <label for="chatBox" class="form-label">Send a message:</label>
-                <input class="form-control" type="text" id="chatBox" placeholder="Press ENTER to send the message">
-            </div>
+            <form id="chatForm" class="mt-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Write a message..." name="message">
+                    <button class="btn btn-outline-secondary" type="submit">Send</button>
+                </div>
+            </form>
+
         </div>
 
-        <div class="col-md-4" >
-            <div class="card mt-1">
-                <div class="card-header">
-                    Last connections:
+        <div class="col-md-4 order-1 order-md-2" >
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <span class="fw-semibold">Last connections:</span>
                 </div>
                 <ul class="list-group list-group-flush" id="enLinea">
                 </ul>
