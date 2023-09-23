@@ -67,7 +67,7 @@ export const addCartProduct = async (req,res,next) => { // premium no puede agre
         // si es un usuario premium y ES un producto suyo devuelve error
         const product = await getProdById(pid) 
         if(req.user.role !== "admin" && product.owner === req.user.email){
-            return res.status(200).json({status: "error", message: "You are not allowed to buy your own products!"})
+            return res.status(403).json({status: "error", message: "You are not allowed to buy your own products!"})
         }
 
         if(quantity>0){
