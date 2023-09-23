@@ -92,7 +92,7 @@ const initializePassport = () => {
     passport.use('github', new GitHubStrategy({
         clientID: config.github_client_id,
         clientSecret: config.github_client_secret,
-        callbackURL: "http://localhost:4000/api/sessions/github/callback",
+        callbackURL: "https://ecommerce-backend-becchio.onrender.com/api/sessions/github/callback",
         passReqToCallback:true
       },
       async (req,accessToken, refreshToken, profile, done) => {
