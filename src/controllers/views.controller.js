@@ -223,6 +223,18 @@ export const adminPanel = async(req,res,next) => {
         const user = req.user
         const users = await getAllUsers()
 
+        // ultima conexion
+        users.forEach(usuario => {
+            const lastCon = usuario.last_connection // ultima conexion
+            const diff = Date.now() - lastCon // diferencia en milisegundos con la hora actual
+
+            if(diff > 48 * 60 * 60 * 1000){ // si pasaron +48hs lo categoriza como inactivo
+                usuario.activity = "Inactive"
+            } else{
+                usuario.activity = "Active"
+            }
+        })
+
         let isAdmin = user.role === "admin"
         return res.render('adminPanel', {
             title: 'Admin Panel',

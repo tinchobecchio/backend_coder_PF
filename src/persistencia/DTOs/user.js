@@ -13,13 +13,15 @@ export const getUserDTO = (user) => {
 }
 
 export const getUserDTO2 = (user) => {
-    const {first_name, last_name, email, role, _id } = user
+    // console.log(user);
+    const {first_name, last_name, email, role, _id, last_connection } = user
     let newUser = {
         first_name,
         last_name,
         email,
         role,
-        _id
+        _id,
+        last_connection
     }
     return newUser
 }
