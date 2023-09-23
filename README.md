@@ -20,7 +20,7 @@ El proyecto incluye las siguientes funcionalidades principales:
 - Gestión de productos (crear, actualizar, eliminar, listar).
 - Realización de pedidos y seguimiento de compra por mail.
 - Autenticación de usuarios utilizando JWT.
-- Sistema de roles con permisos diferentes.
+- Sistema de roles con permisos diferentes para cada tipo de usuario: "user", "premium" y "admin".
 - Validación de entrada y manejo de errores.
 - Conexión a una base de datos MongoDB para el almacenamiento de datos.
 
