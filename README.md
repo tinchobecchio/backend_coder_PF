@@ -12,26 +12,23 @@ Además, cuenta con un logger personalizado hecho con **Winston**, mensajería t
 
 Finalmente, la documentación está realizada con **Swagger** y para los tests se utilizaron las librerías **Mocha**, **Chai** y **Supertest**.
 
+## Funcionalidades Principales
+
+El proyecto incluye las siguientes funcionalidades principales:
+
+- Registro y autenticación de usuarios.
+- Gestión de productos (crear, actualizar, eliminar, listar).
+- Realización de pedidos y seguimiento de compra por mail.
+- Autenticación de usuarios utilizando JWT.
+- Sistema de roles con permisos diferentes.
+- Validación de entrada y manejo de errores.
+- Conexión a una base de datos MongoDB para el almacenamiento de datos.
+
 ## Instalación local
 
 1. Descargar o clonar el repositorio y correr en una terminal el comando `npm install`
 
-2. Luego crear el archivo *.env* en la raíz del proyecto y configurar las siguientes variables de entorno:
-
- >MONGO_URL= URL de tu base de datos en mongo
- MONGO_URL_TESTING= URL de la base de datos de testing en mongo
- PORT= puerto que quieras usar
- ADMIN_EMAIL= mail del admin del sitio
- ADMIN_PASSWORD= contraseña
- SIGNED_COOKIE= secreto para firmar cookies
- SESSION_SECRET= secreto para las sesiones
- SALT= salt para hashear datos
- GITHUB_CLIENT_ID  = id client en tu app de acceso con github
- GITHUB_CLIENT_SECRET= clave secreta de la app de github
- GMAIL_USER= mail para usar nodemailer
- GMAIL_PASSWORD= contraseña para applicaciones de gmail
- JWT_SECRET= secreto jason web token
- JWT_COOKIE= secreto para la cookie que guarda el JWT
+2. Luego, crear el archivo *.env* en la raíz del proyecto y configurar con las variables de entorno que se encuentran en el archivo `ejemplo.env`
 
 3. Finalmente, podrás acceder al entorno de desarrollo corriendo el comando `npm run dev`
 
@@ -53,8 +50,8 @@ Por ejemplo, suponiendo que estes corriendo el proyecto de forma local sobre el 
 
 ## Deploy
 
-El proyecto se encuentra actualmente deployado con [render](http://render.com) en esta dirección:
+El Deploy se realizó con [Render](http://render.com) en esta dirección:
 
 <https://ecommerce-backend-becchio.onrender.com/>
 
-Si es la primera vez que entras a la página es posible que tarde un poco mas de tiempo en cargar debido a que render suele poner en suspenso a los proyectos y vuelve a hacer el deploy cuando detecta actividad.
+**Aclaración:** Si es la primera vez que entras a la página es posible que tarde más tiempo en cargar debido a que Render pone en suspenso los proyectos de tier gratuitos que no hayan tenido actividad durante los últimos 15 minutos y los vuelve a levantar cuando detecta una nueva petición.
