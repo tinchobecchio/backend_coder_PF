@@ -1,6 +1,5 @@
 const deleteFromCart = (cid,pid) => {
     const URL = `/api/carts/${cid}/products/${pid}`
-    // console.log(URL);
     fetch(URL, { method: 'DELETE' })
         .then(response => response.json())
         .then(data => {
@@ -33,11 +32,9 @@ const deleteFromCart = (cid,pid) => {
 
 const resetCart = (cid) => {
     const URL = `/api/carts/${cid}`
-    // console.log(URL);
     fetch(URL, { method: 'DELETE' })
         .then(response => response.json())
         .then(data => {
-
             if(data.status === 'success'){
                 Swal.fire({
                     icon: "success",
@@ -69,7 +66,6 @@ const purchaseCart = (cid) => {
     fetch(URL)
     .then(response => response.json())
     .then(data => {
-        // console.log(data)
         if(data.status === 'success'){
             Swal.fire({
                 icon: "success",
@@ -159,8 +155,6 @@ const editQuantity = (cid, pid, cant) => {
                             allowOutsideClick: false
                         })
                     }
-
-
                 })
                 .catch(err => {
                     Swal.fire({

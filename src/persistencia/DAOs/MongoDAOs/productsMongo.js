@@ -11,7 +11,7 @@ class ProductsManager {
   }
 
   async findAllPaginate(query, limit, page, sorter) {
-    try {
+    try { // si no se le pasa limit lo puse por defecto en 8 porque queda bien en la vista products
         const prods = await productsModel.paginate(query,{limit: limit ?? 8, page: page ?? 1, sort: sorter, lean: true})
       return prods
     } catch (error) {

@@ -83,7 +83,7 @@ const deleteInactiveUsers = () => {
                     } 
                   })
             }
-            // si no se pudo eliminar el usuario
+            // si hubo algun error
             if(data.status === 'error'){
                 Swal.fire({
                     icon: 'error',

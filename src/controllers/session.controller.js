@@ -8,7 +8,6 @@ import { validatePassword } from '../utils/bcrypt.js'
 export const logout = async(req,res,next) => {
   try {
     const connection = await lastConnectionUpdate(req.user.email)
-    // console.log(connection);
     res.clearCookie(config.jwt_cookie)
     res.redirect('/')
   } catch (error) {
@@ -59,11 +58,13 @@ export const resetPwd = async(req,res,next) => {
     }
     const token = jwt.sign(payload, 'password', {expiresIn:"1hr"})
 
+    const baseUrl = req.protocol + '://' + req.get('host'); // trae https + :// + pepito.com
+
     // - crear un link a una vista de nueva contraseña con el jwt en el params
-    const link = `http://localhost:4000/resetpass/newpass/${token}` 
+    const link = `${baseUrl}/resetpass/newpass/${token}` 
 
     // - fetch post a la ruta del nodemailer pasandole el link para que lo agregue al boton del mail
-    const URL = `http://localhost:4000/api/mail/resetpass`
+    const URL = `${baseUrl}/api/mail/resetpass`
 
     fetch(URL, {
       method: 'POST',
@@ -103,7 +104,6 @@ export const newpass = async(req,res) => {
   } else {
     samePass = false // si es una contra con github lo dejo en false asi puede setearla
   }
-  console.log(samePass);
   // si son la misma redireccionar a una vista resultado error que le advierta que la contra debe ser distinta a la actual
   if(samePass){
     req.logger.warning('La contraseña nueva no puede ser igual a la actual')

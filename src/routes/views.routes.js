@@ -18,20 +18,14 @@ viewsRouter.get('/cart', customJWTPolicy(["USER","PREMIUM"]), cart)
 viewsRouter.get('/mockingproducts', mockingProds)
 
 // Reset pass
-// estas rutas son publicas ya que no tenemos ningun usuario logueado,
-// es alguien sin loguear que quiere restablecer la contraseña
-// si son PUBLIC el middleware devuelve next directamente
 viewsRouter.get('/resetpass', customJWTPolicy(["PUBLIC"]), resetPass)
 viewsRouter.get('/resetpass/mailsent', customJWTPolicy(["PUBLIC"]), resetPassMailSent)
 viewsRouter.get('/resetpass/mailerror', customJWTPolicy(["PUBLIC"]), resetPassError)
 viewsRouter.get('/resetpass/newpass/:token', customJWTPolicy(["PUBLIC"]), newPass)
 
-// vista para el admin
-viewsRouter.get('/adminPanel', customJWTPolicy(["ADMIN"]), adminPanel)
-
-// vista para editar productos
-viewsRouter.get('/edit-product/:pid', customJWTPolicy(["ADMIN", "PREMIUM"]), editProd)
-// vista premium
-viewsRouter.get('/premium', customJWTPolicy(["ADMIN", "PREMIUM"]), premium)
+// Vistas Extras
+viewsRouter.get('/adminPanel', customJWTPolicy(["ADMIN"]), adminPanel) // vista para el admin
+viewsRouter.get('/edit-product/:pid', customJWTPolicy(["ADMIN", "PREMIUM"]), editProd) // vista para editar productos
+viewsRouter.get('/premium', customJWTPolicy(["ADMIN", "PREMIUM"]), premium) // vista premium
 
 export default viewsRouter;

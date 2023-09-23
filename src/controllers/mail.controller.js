@@ -20,8 +20,6 @@ export const ticket = async(req,res) => {
         return res.status(200).json({status: "success", message: 'Mail sent successfully'})
 
     } catch (error) {
-        // res.status(500).json({error})
-        console.log(error);
         return res.status(200).json({status: "error", message: 'There was a problem sending the email'})
     }
 }

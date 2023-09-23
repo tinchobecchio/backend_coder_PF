@@ -14,7 +14,6 @@ export class MessageManager {
             )
             return msg
         } catch (error) {
-            // console.log(error);
             logger.error(error)
         }
     }

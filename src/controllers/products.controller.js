@@ -4,7 +4,7 @@ import { generateProductErrorInfo } from '../services/errors/info.js'
 import { getAllProducts, getProdById, getProd, addNewProduct, updateProd, deleteProd } from '../services/products.service.js'
 import { transporter } from '../utils/nodemailer.js'
 
-// Devuelve todos los productos o la cantidad deseada con limit
+// Devuelve todos los productos o los filtra segun querys
 // ej http://localhost:4000/api/products?limit=3&sort=1&page=2&category=alimentos&status=true
 export const getProducts = async (req,res,next) => {
     try {
@@ -15,7 +15,7 @@ export const getProducts = async (req,res,next) => {
         res.status(200).json({status: "success", payload: productos})
     } catch (error) {
         req.logger.error('Error trying to get products')
-        res.status(400).json({error});
+        res.status(400).json({status: "error",error});
     }
 }
 
@@ -59,12 +59,6 @@ export const addProduct = async (req,res,next) => {
         // Error si ya existe el producto con el code
         let producto = await getProd({code})
         if(producto) {
-            // CustomError.createError({
-            //     name:"Product creation error",
-            //     cause: "There is another product with the same code",
-            //     message:"The product's code needs to be unique",
-            //     code:EErrors.INVALID_TYPES_ERROR
-            // })
             return res.status(200).json({status: "error", message:"The product's code needs to be unique"})
         }
 

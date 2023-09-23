@@ -8,7 +8,6 @@ const deleteProd = (pid, title) => {
         confirmButtonText: 'Delete it!',
         showCancelButton: true,
         }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             fetch(URL, { method: 'DELETE' })
                 .then(response => response.json())
@@ -41,7 +40,6 @@ const deleteProd = (pid, title) => {
 }
 
 const addToCart = (cid, pid) => {
-
     // para que el usuario ingrese una cantidad
     Swal.fire({
         title: 'Enter a quantity',

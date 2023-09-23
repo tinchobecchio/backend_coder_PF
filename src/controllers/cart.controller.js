@@ -20,7 +20,6 @@ export const getCarts = async (req,res,next) => {
         res.status(200).json({status: "success", payload: carts})
     } catch (error) {
         req.logger.error('Error trying to get carts')
-        // res.send(error)
         next(error)
     }
 }
@@ -32,7 +31,6 @@ export const createCart = async (req,res,next) => {
         res.status(201).json({status: "success", message: 'Cart created succesfully.'})
     } catch (error) {
         req.logger.error('Error trying to create a cart')
-        // res.send(error)
         next(error)
     }
 }
@@ -69,12 +67,6 @@ export const addCartProduct = async (req,res,next) => { // premium no puede agre
         // si es un usuario premium y ES un producto suyo devuelve error
         const product = await getProdById(pid) 
         if(req.user.role !== "admin" && product.owner === req.user.email){
-            // CustomError.createError({
-            //     name:"Adding a product to cart error",
-            //     cause: "The product belong to the user",
-            //     message:"You can't buy your own products",
-            //     code:EErrors.AUTHORIZATION_ERROR
-            // })
             return res.status(200).json({status: "error", message: "You are not allowed to buy your own products!"})
         }
 

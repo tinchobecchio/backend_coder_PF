@@ -11,13 +11,6 @@ export const customJWTPolicy = (roles) =>{
             // extraer user de cookies y meterlo en el req.user
             const token = req.cookies[config.jwt_cookie]
             if(!token) {
-                // // Manejo de errores personalizado
-                // CustomError.createError({
-                //     name:"Authentication error",
-                //     cause: "User is not authenticated",
-                //     message:"You need to be logged in first.",
-                //     code:EErrors.AUTHENTICATION_ERROR
-                // })
                 return res.redirect('/')
             }
             jwt.verify(token, config.jwt_secret, (err,data) => {

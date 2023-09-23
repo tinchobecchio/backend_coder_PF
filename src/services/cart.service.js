@@ -1,5 +1,4 @@
 import {cartManager} from "../persistencia/DAOs/MongoDAOs/cartMongo.js";
-import { getProd } from "./products.service.js";
 
 export const findAllCarts = async() => {
     try {
@@ -85,7 +84,6 @@ export const deleteProduct = async (cid, pid) => {
 // Actualiza los productos de un carrito con un array de ids de productos dado (se lo paso por req.body)
 export const updateArrayProds = async (cid, array) => {
     try {
-        // array.forEach(prod => addProduct(cid, prod.idProd, prod.quantity))
         array.forEach(prod => {
             addProduct(cid, prod.id_prod._id, prod.cant)
         })
@@ -115,13 +113,13 @@ export const updateProductQuantity = async (cid, pid, quantity) => {
 // Elimina todos los productos del carrito
 export const resetCartProds = async (cid) => {
     try {
-            const carrito = await cartManager.findOneByid(cid)
-            carrito.products = [] // reinicio el carrito
-            await carrito.save()
+        const carrito = await cartManager.findOneByid(cid)
+        carrito.products = [] // reinicio el carrito
+        await carrito.save()
 
-            return carrito
+        return carrito
 
-        } catch (error) {
-            return error;
-        }
+    } catch (error) {
+        return error;
     }
+}
